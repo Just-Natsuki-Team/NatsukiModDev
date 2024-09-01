@@ -185,14 +185,16 @@ label ch30_init:
         # No holiday, so pick a greeting or random event
         elif not jn_topic_in_event_list_pattern("^greeting_"):
             if (
-                random.randint(1, 10) == 1
+                (random.randint(1, 10) == 1 or persistent._jn_event_attempt_count == 20)
                 and (not persistent._jn_player_admission_type_on_quit and not Natsuki.getQuitApology())
                 and jn_events.selectEvent()
             ):
+                persistent._jn_event_attempt_count = 0
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
             else:
+                persistent._jn_event_attempt_count += 1
                 greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)
                 
@@ -763,7 +765,7 @@ label farewell_menu:
         available_farewell_options.sort(key = lambda option: option[0])
         available_farewell_options.append(("Goodbye.", "farewell_start"))
 
-    call screen scrollable_choice_menu(available_farewell_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_farewell_options, ("Go back", None))
     $ Natsuki.setForceQuitAttempt(False)
 
     if isinstance(_return, basestring):
@@ -771,7 +773,7 @@ label farewell_menu:
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label outfits_menu:
     call screen scrollable_choice_menu([
@@ -779,7 +781,7 @@ label outfits_menu:
         ("Can I suggest a new outfit?", "outfits_suggest_outfit"),
         ("Can you forget about an outfit I suggested?", "outfits_remove_outfit"),
         ("Can you search again for new items?", "outfits_reload")],
-        ("Nevermind.", None),
+        ("Go back", None),
         400,
         "mod_assets/icons/outfits.png")
 
@@ -788,7 +790,7 @@ label outfits_menu:
         $ push(_return)
         jump call_next_topic
 
-    jump ch30_loop
+    jump talk_menu
 
 label extras_menu:
     python:
