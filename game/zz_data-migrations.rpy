@@ -253,7 +253,7 @@ init python in jn_data_migrations:
             jn_utils.log("Migrated: persistent.jn_player_nicknames_bad_given_total")
 
         store.persistent._jn_version = "1.0.0"
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.0.0 DONE")
         return
 
@@ -267,7 +267,7 @@ init python in jn_data_migrations:
         jn_outfits.getWearable("jn_clothes_qt_sweater").unlock()
 
         store.persistent._jn_version = "1.0.1"
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.0.1 DONE")
         return
 
@@ -286,7 +286,7 @@ init python in jn_data_migrations:
         if jn_outfits.getOutfit("jn_skater_outfit").unlocked:
             jn_outfits.getWearable("jn_facewear_plasters").unlock()
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.0.3 DONE")
         return
 
@@ -318,7 +318,7 @@ init python in jn_data_migrations:
                 jn_poems.getPoem("jn_christmas_gingerbread_house").unlock()
                 jn_utils.log("Migrated: jn_christmas_gingerbread_house unlock state")
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.1.0 DONE")
         return
 
@@ -337,7 +337,7 @@ init python in jn_data_migrations:
         if store.persistent._jn_player_birthday_day_month is not None:
             store.persistent._jn_natsuki_birthday_known = True
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.2.0 DONE")
         return
 
@@ -405,7 +405,7 @@ init python in jn_data_migrations:
             jn_outfits.getOutfit("jn_cherry_blossom_outfit").unlock()
             jn_utils.log("Unlock state corrected for outfits: jn_chick_outfit, jn_cherry_blossom_outfit")
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.2.4 DONE")
         return
 
@@ -441,7 +441,7 @@ init python in jn_data_migrations:
             del store.persistent.jn_sunset_hour
             jn_utils.log("Removed: persistent.jn_sunset_hour")
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.3.0 DONE")
         return
 
@@ -463,6 +463,11 @@ init python in jn_data_migrations:
         
         if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpyc")):
             jn_utils.log("Removed unused compiled file: game/threading.rpyc")
+
+        # Configure shown_count for holidays
+        for holiday in jn_events.getAllHolidays():
+            holiday.shown_count = 1 if holiday.label in store.persistent._seen_ever else 0
+            jn_utils.log("Set shown count for {0} to {1}".format(holiday.label, holiday.shown_count))
         
         if store.persistent.affinity >= 12500:
             store.persistent._jn_pic_aff = store.persistent.affinity
@@ -470,6 +475,6 @@ init python in jn_data_migrations:
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
-        jn_utils.save_game()
+        jn_utils.saveGame()
         jn_utils.log("Migration to 1.3.5 DONE")
         return

@@ -1353,6 +1353,18 @@ init -100 python in jn_utils:
         else:
             return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
 
+    def diceRoll(faces):
+        """
+        Returns True or False based on whether a roll with the given faces returns one.
+
+        IN:
+            - faces - int number of faces for the diceroll
+
+        OUT:
+            - True if the roll equals one, otherwise False
+        """
+        return random.randint(1, faces) == 1
+
     def getPlayerInitial():
         """
         Returns the first letter of the player's name.
@@ -1864,7 +1876,7 @@ init -100 python in jn_utils:
         """
         return __KEY_VALID
 
-    def save_game():
+    def saveGame():
         """
         Saves all game data.
         """
@@ -1946,6 +1958,9 @@ define audio.t4g = "<loop 1.000>bgm/4g.ogg"
 # JN resources
 
 # Singleton sound effects
+define audio.anime_generic_theme = "mod_assets/sfx/anime_generic_theme.ogg"
+define audio.anime_punch = "mod_assets/sfx/anime_punch.ogg"
+define audio.anime_slash = "mod_assets/sfx/anime_slash.ogg"
 define audio.blow = "mod_assets/sfx/blow.ogg"
 define audio.book_closing = "mod_assets/sfx/book_closing.ogg"
 define audio.button_mashing_a = "mod_assets/sfx/button_mashing_a.ogg"
