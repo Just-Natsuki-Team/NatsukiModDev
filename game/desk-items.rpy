@@ -205,6 +205,22 @@ init -55 python in jn_desk_items:
     ))
 
     __registerDeskItem(JNDeskItem(
+        reference_name="jn_a_la_mode_manga_held",
+        item_type=JNDeskItemTypes.normal,
+        desk_slot=JNDeskSlots.centre,
+        unlocked=False,
+        image_path="mod_assets/props/a_la_mode_manga_held.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
+        reference_name="jn_step_by_step_manga_held",
+        item_type=JNDeskItemTypes.normal,
+        desk_slot=JNDeskSlots.centre,
+        unlocked=False,
+        image_path="mod_assets/props/step_by_step_manga_held.png"
+    ))
+
+    __registerDeskItem(JNDeskItem(
         reference_name="jn_parfait_manga_held",
         item_type=JNDeskItemTypes.normal,
         desk_slot=JNDeskSlots.centre,

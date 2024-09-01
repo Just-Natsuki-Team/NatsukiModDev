@@ -757,7 +757,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_today_is_gonna_be_great",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "4unmssl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -766,7 +769,8 @@ label greeting_love_plus_today_is_gonna_be_great:
     n 1unmbsledz "[player]!{w=1}{nw}" 
     extend 3fchgnl " You're back,{w=0.3} finally!"
     n 3fchsml "Ehehe.{w=0.5}{nw}" 
-    extend 3uchgnleme " Now I {i}know{/i} today's gonna be great!"
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    extend 3uchgnleme " Now I {i}know{/i} [time_descriptor] is gonna be great!"
 
     return
 
@@ -778,7 +782,7 @@ init 5 python:
             unlocked=True,
             affinity_range=(jn_affinity.LOVE, None),
             additional_properties={
-                "expression": "3fkrbol"
+                "expression": "5fcspol"
             }
         ),
         topic_group=TOPIC_TYPE_GREETING
@@ -899,7 +903,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_looking_for_me",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "2unmsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -923,7 +930,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_dull_moment",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "2fllsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -975,7 +985,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_love_plus_show_yourself",
             unlocked=True,
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "4fsqfs"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1093,22 +1106,63 @@ label greeting_love_plus_cant_live_without_me:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_love_plus_spell_it_out",
+            unlocked=True,
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "1ccscs"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_love_plus_spell_it_out:
+    n 1ccsss "Heh.{w=0.75}{nw}"
+    extend 2ccsbg " Well,{w=0.2} well."
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    n 2fsqbg "Just look who decided to show their face [time_descriptor].{w=1}{nw}"
+    extend 4fnmbg " Huh?"
+    n 4fsqsm "..."
+    n 4fsqsr "..."
+    n 3nsqflsbr "...Seriously?{w=0.75}{nw}"
+    extend 3fnmaj " I'm really gonna have to spell it out?"
+    n 1ctremesi "..."
+    n 3fcsgs "{i}You{/i},{w=0.75}{nw}"
+    $ chosen_tease = jn_utils.getRandomTeaseName()
+    extend 3uchgnl " you absolute [chosen_tease]!{w=1}{nw}"
+    extend 7fchsml " Ehehe."
+    $ chosen_endearment = jn_utils.getRandomEndearment()
+    n 2fchtsl "Now sit your butt down and get cozy already,{w=0.2} [chosen_endearment]!"
+
+    return
+
 # AFFECTIONATE/ENAMORED greetings
 
 init 5 python:
     registerTopic(
         Topic(
             persistent._greeting_database,
-            label="greeting_affectionate_enamored_good_to_see_you",
+            label="greeting_affectionate_enamored_just_as_amazing",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "7uslsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
-label greeting_affectionate_enamored_good_to_see_you:
-    n 1uchbgl "[player]!{w=0.2} You're back!"
-    n 3fchsml "Let's make today amazing as well,{w=0.2} 'kay?{w=0.3} Ehehe."
+label greeting_affectionate_enamored_just_as_amazing:
+    n 4unmajl "[player]!{w=0.75}{nw}" 
+    extend 4cchbgl " You're back!"
+    n 3ccsssl "Heh."
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    n 6ccsbgl "Let's make [time_descriptor] just as {i}amazing{/i} as me,{w=0.2} 'kay?{w=0.75}{nw}" 
+    extend 7fcssmledz " Ehehe."
 
     return
 
@@ -1118,18 +1172,22 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_couldnt_resist",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "7fcssml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_affectionate_enamored_couldnt_resist:
-    n 3fsqsml "Well hey,{w=0.2} [player].{w=0.5}{nw}" 
+    n 3fsqsml "Well hey,{w=0.2} [player].{w=0.75}{nw}" 
     extend 3tsqssl " Back so soon?"
     n 3fcsctl "I knew you obviously just couldn't resist.{w=0.75}{nw}"
     extend 3fcssmledz " Ehehe."
     n 4tsqssl "So...{w=1}{nw}"
-    extend 2fchbgl " what do you wanna do today?"
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    extend 2fchbgl " what do you wanna do [time_descriptor]?"
 
     return
 
@@ -1139,16 +1197,19 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_just_cant_stay_away",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2ccssml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_affectionate_enamored_just_cant_stay_away:
-    n 1usqbgl "Well,{w=0.2} well,{w=0.2} well.{w=0.5}{nw}" 
+    n 2usqbgl "Well,{w=0.2} well,{w=0.2} well.{w=0.75}{nw}" 
     extend 2fsqbgl " What do we have here?"
     n 2tsqctl "You just can't stay away from me,{w=0.2} can you?" 
-    n 2ksqbgl "Not that I blame you,{w=0.2} obviously.{w=0.5}{nw}"
+    n 2ksqbgl "Not that I blame you,{w=0.2} obviously.{w=0.75}{nw}"
     extend 2fchtsledz " I guess I just {i}have{/i} that effect on people."
     n 4fchgnlelg "Ehehe."
 
@@ -1160,15 +1221,19 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_have_so_much_fun",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "4fchsml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_affectionate_enamored_have_so_much_fun:
-    n 1uchbgleme "It's [player]!"
-    n 3fcssml "We're gonna have so much fun today!{w=0.5}{nw}" 
-    extend 3nchsml " Ehehe."
+    n 4fchbgleme "Hey!{w=0.5} It's [player]!"
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    n 7fcssml "We're gonna have {w=0.2}{i}so{/i}{w=0.2} much fun [time_descriptor]!{w=0.5}{nw}" 
+    extend 3fsqsml " Ehehe."
     n 3fchbgl "So!{w=0.2} what did you wanna talk about?"
 
     return
@@ -1179,15 +1244,19 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_everything_is_fine",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2nsrsll"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_affectionate_enamored_everything_is_fine:
-    n 1uwdgslesu "[player]!{w=0.5}{nw}" 
+    n 4unmgslesu "[player]!{w=0.5}{nw}" 
     extend 4ullajlsbr " You're back!"
-    n 2fsqpol "You kept me waiting {i}again{/i},{w=0.2} you know..."
+    n 2fsqpol "You kept me waiting {i}again{/i},{w=0.5}{nw}" 
+    extend 2fcspol " you know..."
     n 2fcsbgl "But...{w=0.5} at least my patience paid off.{w=0.75}{nw}"
     extend 2fcssmleme " Ehehe."
 
@@ -1199,7 +1268,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_not_surprised",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2ccssm"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1220,17 +1292,20 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_affectionate_enamored_in_for_some_fun",
             unlocked=True,
-            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED)
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "7tllsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_affectionate_enamored_in_for_some_fun:
-    n 1unmbg "[player]!{w=0.75}{nw}"
+    n 4unmbg "[player]!{w=0.75}{nw}"
     extend 2ccssslsbr " Man...{w=1}{nw}"
     extend 2fcsbglsbr " it's about time you showed up!"
     n 4fsqsml "Ehehe.{w=0.75}{nw}"
-    extend 3fchbgleme " Now I {i}know{/i} we're in for some fun!"
+    extend 7fchbgleme " Now I {i}know{/i} we're in for some fun!"
 
     return
 
@@ -1250,7 +1325,8 @@ init 5 python:
 
 label greeting_affectionate_enamored_good_taste:
     n 3fcsct "Oh?{w=0.75}{nw}"
-    extend 3fsqbg " And just look who decided to drop into the clubroom today,{w=0.2} huh?"
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    extend 3fsqbg " And just look who decided to drop into the clubroom [time_descriptor],{w=0.2} huh?"
     n 3fcssmesm "..."
     n 4tllbg "Well,{w=0.2} what can I say?"
     n 2uchgnl "Looks like you've got {i}some{/i} good taste after all,{w=0.2} [player]!{w=0.75}{nw}"
@@ -1291,6 +1367,44 @@ label greeting_affectionate_enamored_crawling_back:
     
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_affectionate_enamored_barging_in",
+            unlocked=True,
+            affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.ENAMORED),
+            additional_properties={
+                "expression": "2ckrbo"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_affectionate_enamored_barging_in:
+    n 2cnmemesh "...!{w=0.75}{nw}"
+    n 2fcswr "H-{w=0.2}hey!{w=0.75}{nw}"
+    extend 4cnmwr " [player]?!{w=0.75}{nw}"
+    extend 4fbkwr " What's the big idea?"
+    n 2fcsem "Ugh..."
+    n 4fsqem "Did nobody ever tell you to {i}knock{/i} before just barging in like that or what?{w=0.75}{nw}"
+    extend 1fnmfl " Huh?"
+    n 2fsqsr "..."
+    n 2fsqdv "..."
+    n 4fchdv "..."
+    n 4fchdvesm "Pffft-!"
+    n 3fchbg "Hey,{w=0.2} come on!{w=0.75}{nw}"
+    extend 3csqbg " Lighten up already!{w=1}{nw}"
+    extend 1fllbgl " Jeez..."
+    n 4ccsssl "A-{w=0.2}and besides."
+    n 2clrbgl "You should {i}know{/i} you're welcome enough by now,{w=0.5}{nw}"
+    extend 2nchgnl " you dork!"
+
+    if Natsuki.isEnamored(higher=True):
+        n 2fchbll "Welcome back,{w=0.2} [player]~!"
+    
+    return
+
 # NORMAL/HAPPY greetings
 
 init 5 python:
@@ -1299,13 +1413,16 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_whats_up",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "7ulrbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_normal_happy_whats_up:
-    n 1uwdajesu "Oh!{w=0.5}{nw}"
+    n 7unmajesu "Oh!{w=0.5}{nw}"
     extend 4ulrsssbr " Hey,{w=0.2} [player]!"
     n 3unmbo "What's up?"
 
@@ -1317,13 +1434,16 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_glad_to_see_you",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "2tslbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_normal_happy_glad_to_see_you:
-    n 1uchsm "Hey,{w=0.2} [player]!"
+    n 2cchsm "Hey,{w=0.2} [player]!"
     n 4nllsssbr "I was just wondering when you'd drop by again."
 
     return
@@ -1334,7 +1454,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_spacing_out",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "1kllca"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1356,7 +1479,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_heya",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "1fcssm"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1373,14 +1499,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_knew_youd_be_back",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "1unmsm"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_normal_happy_knew_youd_be_back:
-    n 1unmbg "It's [player]!{w=0.2} Hi!"
-    n 2fcsbglesssbr "I-{w=0.1}I knew you'd be back,{w=0.2} obviously."
+    n 1unmbg "It's [player]!{w=0.75}" 
+    extend 1nchbg " Hi!"
+    n 2fcsbglesssbr "I-{w=0.2}I knew you'd be back,{w=0.2} obviously."
     n 2fcssml "You'd have to have no taste to not visit again.{w=0.75}{nw}" 
     extend 2fcsbgl " Ahaha!"
 
@@ -1392,15 +1522,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_normal_happy_sup_player",
             unlocked=True,
-            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY)
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "7clrbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_normal_happy_sup_player:
-    n 1unmboesu "Eh?{w=0.5}{nw}"
-    n 1unmaj "Oh.{w=0.5}{nw}"
-    extend 1tnmaj " Hey,{w=0.2} [player]."
+    n 7unmboeqm "Eh?{w=0.7}{nw}"
+    n 4unmaj "Oh.{w=0.75}{nw}"
+    extend 4tnmaj " Hey,{w=0.2} [player]."
     n 2tllss "What's up?"
 
     return
@@ -1562,6 +1695,35 @@ label greeting_normal_some_notice:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_normal_back_again",
+            unlocked=True,
+            affinity_range=(jn_affinity.NORMAL, jn_affinity.HAPPY),
+            additional_properties={
+                "expression": "7cdrsl"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_normal_back_again:
+    n 7csrca "..."
+    n 7tnmsleqm "...?"
+    n 7unmfleex "Oh!{w=0.75}{nw}"
+    extend 3cllssl " [player]!{w=0.75}{nw}"
+    extend 3tnmbol " You're back again,{w=0.2} huh?"
+    n 3ccstrlsbl "N-{w=0.2}not that I have a problem with it,{w=0.2} or anything like that.{w=0.75}{nw}"
+    extend 3ccscalsbl " Obviously."
+    n 3nlrbo "..."
+    n 3ulraj "So...{w=1}{nw}"
+    $ time_descriptor = "today" if jn_is_day() else "tonight"
+    extend 3tnmbo " what have you got for me [time_descriptor],{w=0.2} [player]?"
+
+    return
+
 # DISTRESSED/UPSET greetings
 
 init 5 python:
@@ -1570,15 +1732,19 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_oh_its_you",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "1cslsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_distressed_upset_oh_its_you:
-    n 1ndtsl "Oh.{w=1}{nw}" 
+    n 1nnmpu "Oh.{w=1}{nw}" 
     extend 2fsqsl " It's you."
-    n 2fnmsl "Hello,{w=0.5} {i}[player]{/i}."
+    n 2fnmfl "Hello,{w=0.75}{nw}" 
+    extend 2fsqsl " {i}[player]{/i}."
 
     return
 
@@ -1588,13 +1754,16 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_hi",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "2csrsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_distressed_upset_hi:
-    n 1nplsl "{i}[player]{/i}.{w=0.5}{nw}" 
+    n 2nnmsl "{i}[player]{/i}.{w=0.75}{nw}" 
     extend 2fsqsl " Hi."
 
     return
@@ -1605,14 +1774,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_welcome_back_i_guess",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "2nsrsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_distressed_upset_welcome_back_i_guess:
     n 2nsqsl "[player].{w=0.75}{nw}" 
-    extend 2flrsr " Welcome back,{w=0.2} I {i}guess{/i}."
+    extend 2flrfl " Welcome back,{w=0.5}{nw}" 
+    extend 2fsrsl " I {i}guess{/i}."
 
     return
 
@@ -1622,14 +1795,17 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_better_be_good",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "1cslbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_distressed_upset_better_be_good:
     n 1nsqaj "Huh.{w=0.75}{nw}" 
-    extend 1fsqsr " [player]."
+    extend 4fsqsr " {i}[player]{/i}."
     n 3fnmsl "This better be good."
 
     return
@@ -1640,14 +1816,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_oh_you_came_back",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "1cslbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_distressed_upset_oh_you_came_back:
-    n 1tsqaj "Oh?{w=0.2} You came back?"
-    n 3fslem "...I wish I could say I was happy about it."
+    n 1ccsss "Heh.{w=0.75}{nw}" 
+    extend 1fsqfl " You came {i}back{/i}?"
+    n 3cslem "...Wish I could say I was happy about it."
 
     return
 
@@ -1657,7 +1837,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_distressed_upset_oh_great",
             unlocked=True,
-            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET)
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "1ccssl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1667,7 +1850,7 @@ label greeting_distressed_upset_oh_great:
     n 1csqboeqm "...?"
     n 2clrfl "Oh.{w=0.75}{nw}"
     extend 2clrem " Great."
-    n 4csqem "It's{w=0.25}{nw}" 
+    n 4csqem "It's{w=0.5}{nw}" 
     extend 4fsqsl " {i}you{/i}."
 
     return
@@ -1697,6 +1880,31 @@ label greeting_distressed_upset_just_perfect:
 
     return
 
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_distressed_upset_real_great",
+            unlocked=True,
+            affinity_range=(jn_affinity.DISTRESSED, jn_affinity.UPSET),
+            additional_properties={
+                "expression": "3csrfr"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_distressed_upset_real_great:
+    n 3tsqfreqm "...?"
+    n 3ctlfl "...Ugh."
+    n 4fllfl "Yeah,{w=0.2} that's {i}real{/i} great.{w=0.75}{nw}"
+    extend 4fdlfl " Just wonderful."
+    n 1fslem "...{i}Not{/i}."
+    n 2fnmfl "Hi,{w=0.5}{nw}"
+    extend 2fsqfl " {i}[player]{/i}."
+
+    return
+
 # BROKEN- greetings
 
 init 5 python:
@@ -1705,14 +1913,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_oh_its_you",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "4fcsun"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_broken_minus_oh_its_you:
-    n 4kplsrtdr "...?"
-    n 2fcsanltsa "Oh...{w=0.3} it's you."
+    n 4knmsrtdr "...?"
+    n 4csqsrltsb "Oh.{w=1}{nw}" 
+    extend 2fcsanltsa " it's {i}you{/i}."
 
     return
 
@@ -1722,7 +1934,10 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_nothing_to_say",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "4fcsunltsa"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -1739,14 +1954,17 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_why",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "1fcsunl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_broken_minus_why:
-    n 1fplfrltdr "...Why?"
-    n 4fcsupltsa "Why did you come back,{w=0.2} [player]?"
+    n 1fwmfrltdr "...Why?"
+    n 4fcsupltsa "Why did {i}you{/i} come back?"
 
     return
 
@@ -1756,14 +1974,18 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_enough_on_my_mind",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "1fcsunl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_broken_minus_enough_on_my_mind:
-    n 2fnmunltdr "...?"
-    n 2fcsupltsd "As if I didn't have enough on my mind..."
+    n 2fslunltsb "...?"
+    n 2fcsanltsb "Tch!"
+    n 2fcsupltsb "As if I didn't have {i}enough{/i} on my mind..."
 
     return
 
@@ -1773,13 +1995,16 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_leave_me_be",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "4fcsunltsa"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_broken_minus_leave_me_be:
-    n 1fcsfultsa "I'm so {i}sick{/i} of this."
+    n 1fcsfultsa "I'm so {w=0.2}{i}sick{/i}{w=0.2} of this."
     n 2kcsupltsd "Why can't you just leave me be..."
 
     return
@@ -1790,13 +2015,16 @@ init 5 python:
             persistent._greeting_database,
             label="greeting_broken_minus_just_leave_me_alone",
             unlocked=True,
-            affinity_range=(None, jn_affinity.BROKEN)
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "1fcsunltsb"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_broken_minus_just_leave_me_alone:
-    n 1fsqunltsbeqm "...?{w=0.75}{nw}"
+    n 1fsqunltsbeqm "...?{w=1}{nw}"
     n 4fcsupltsa "Oh,{w=0.2} for-!"
     n 4cslupltsb "Why can't you just leave me alone..."
 
@@ -1819,10 +2047,32 @@ init 5 python:
 label greeting_broken_minus_trash_already:
     n 2fslslltsb "..."
     n 2fsqunltsb "...?"
-    n 4fcsslltsa "Heh.{w=0.75}{nw}"
+    n 4fcsslltsa "Heh.{w=1}{nw}"
     extend 1fcsemltsa " As if I didn't feel like trash enough already."
     n 4fsqfultsb "Now I'm {i}sat{/i} in front of it again too."
 
+    return
+
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_broken_minus_any_worse",
+            unlocked=True,
+            affinity_range=(None, jn_affinity.BROKEN),
+            additional_properties={
+                "expression": "2fsrunltse"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_broken_minus_any_worse:
+    n 2csqslltsb "..."
+    n 2ccsflltsa "...Heh.{w=1}{nw}"
+    extend 2ccsemltsa " Amazing."
+    n 2fsranltsb "{i}Just{/i} when I thought things couldn't get any worse."
+    
     return
 
 # Admission-locked greetings; used when Natsuki made the player leave due to tiredness, etc.
@@ -1994,7 +2244,8 @@ label greeting_feeling_better_sick:
                 else:
                     n 4ccsaj "...Okay,{w=0.2} look."
                     n 4cllajl "It's not that I don't enjoy your company,{w=0.5}{nw}"
-                    extend 4cnmfll " or that I don't wanna see you today.{w=0.75}{nw}"
+                    $ time_descriptor = "today" if jn_is_day() else "tonight"
+                    extend 4cnmfll " or that I don't wanna see you [time_descriptor].{w=0.75}{nw}"
                     extend 3fcsemlsbr " O-{w=0.2}of course I do!{w=0.75}{nw}"
                     n 3csrcalsbr "You of all people should really {i}know{/i} that by now."
                     n 3ccswrlsbl "But it can't be at your own expense!{w=0.75}{nw}"
@@ -2228,6 +2479,9 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(3, 4)",
             affinity_range=(jn_affinity.NORMAL, None),
+            additional_properties={
+                "expression": "1tllpu"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
@@ -2237,10 +2491,13 @@ label greeting_early_morning_why_are_you_here:
     extend 3tnmeml " [player]?!"
     n 3fnmpuleqm "What the heck are you doing here so early?"
     n 3tnmpu "Did you have a nightmare or something?"
-    n 3tsqsl "Or...{w=0.3} maybe you never slept?{w=0.5}{nw}" 
-    extend 3tsrpu " Huh."
-    n 4tnmbg "Well,{w=0.2} anyway..."
-    n 4kchbgsbr "Morning?{w=0.3} I guess?"
+    n 3tsrsl "..."
+    n 3tsraj "Or...{w=1}{nw}"
+    extend 3tsqsl " maybe you never slept?{w=0.5}{nw}" 
+    extend 3tslsl " Huh."
+    n 4ccsbgsbr "Well,{w=0.2} anyway..."
+    n 4cchbgsbr "M-{w=0.2}morning?{w=0.75}{nw}" 
+    extend 4csrsssbr " I guess?"
 
     return
 
@@ -2254,21 +2511,35 @@ init 5 python:
             label="greeting_morning_starshine",
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(5, 11)",
-            affinity_range=(jn_affinity.LOVE, None)
+            affinity_range=(jn_affinity.LOVE, None),
+            additional_properties={
+                "expression": "2ccssml"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_morning_starshine:
-    n 1uchbgl "Good morning,{w=0.2} starshine!"
-    n 1kchbgf "The Earth says 'Hello!'"
-    n 4fchnvf "..."
-    n 4nchdvf "Pfffft-!"
-    n 1kchbsl "I'm sorry!{w=0.2} It's just such a dumb thing to say...{w=0.3} I can't keep a straight face!"
-    n 4nchsml "Ehehe."
+    n 2unmfllesu "Ah!{w=0.75}{nw}"
+    $ player_initial = jn_utils.getPlayerInitial()
+    extend 4cchbglsbr " [player_initial]-{w=0.2}[player]!"
+    n 4ccsajlsbr "A-{w=0.2}hem!"
+    n 4fcssmlsbr "..."
+    n 7clrbglsbr "G-{w=0.2}good morning,{w=0.5}{nw}" 
+    extend 7fsrbglsbr " starshine!"
+    n 6cchbglsbr "The Earth says 'H-{w=0.2}hello!'"
+    n 6cchsmlsbr "..."
+    n 5cslunlsbr "..."
+    n 5ccswrlsbl "...I-{w=0.2}it sounded better in my head [player],{w=0.5}{nw}"
+    extend 5csremlsbl " okay?!{w=1}{nw}"
+    extend 2ccspolsbl " Jeez..."
+    n 2cslbol "..."
+    n 2cllpul "But..."
+    n 2cdlpul "You...{w=1}{nw}"
     $ chosen_endearment = jn_utils.getRandomEndearment()
-    n 1kwmsmf "You really are my starshine though,{w=0.2} [chosen_endearment]."
-    n 3uchsmf "Welcome back!"
+    extend 2knmssl " really are my starshine though,{w=0.5}{nw}" 
+    extend 2ksrssl " [chosen_endearment]."
+    n 2cchblleaf "W-{w=0.2}welcome back!"
 
     return
 
@@ -2281,16 +2552,19 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(5, 11)",
             affinity_range=(jn_affinity.AFFECTIONATE, jn_affinity.LOVE),
+            additional_properties={
+                "expression": "4fklfsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_morning_waiting_for_you:
-    n 1fsqajl "Oh!{w=0.5}{nw}" 
+    n 4fsqajl "Oh!{w=0.75}{nw}" 
     extend 2fsqcal " Well look who finally decided to show up!"
     n 2flrsll "You {i}do{/i} know I don't like being kept waiting...{w=0.75}{nw}" 
     extend 2fwmsll " right?"
-    n 4fsqsml "Ehehe.{w=0.5}{nw}" 
+    n 4fsqsml "Ehehe.{w=0.75}{nw}" 
     extend 3fcsssl " You're just lucky you caught me in a good mood..."
     n 3fchgnlelg "You better make it up to me,{w=0.2} [player]~!"
 
@@ -2305,19 +2579,22 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(10, 11)",
             affinity_range=(jn_affinity.HAPPY, jn_affinity.LOVE),
+            additional_properties={
+                "expression": "2csqcs"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_morning_lazy:
-    n 1usqct "Oho?{w=0.5}{nw}" 
+    n 2csqct "Oho?{w=0.5}{nw}"
     extend 2fsqsm " Well look who finally crawled out of bed today!"
-    n 2fsqsg "Jeez,{w=0.2} [player]...{w=0.75}{nw}" 
-    extend 2fchgn " I swear you're lazier than Sayori sometimes!"
-    n 2fcsbg "Well,{w=0.2} better late than never."
+    n 4fsqsg "Jeez,{w=0.2} [player]...{w=0.75}{nw}" 
+    extend 4fchgn " I swear you're lazier than Sayori sometimes!"
+    n 7fcsbg "Well,{w=0.2} better late than never."
     n 3fchbg "Let's make the most of today,{w=0.2} [player]!"
     n 3tsraj "Or...{w=0.75}{nw}" 
-    extend 3tsqsssbl " what's left of it?"
+    extend 3fsqss " what's left of it?"
 
     return
 
@@ -2330,14 +2607,17 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(8, 11)",
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            additional_properties={
+                "expression": "7ullsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_morning_top_of_the_mornin:
-    n 1unmbg "Oh!{w=0.5}{nw}" 
+    n 7unmbgesu "Oh!{w=0.5}{nw}" 
     extend 1fchbg " It's [player]!"
-    n 3fwlsm "Well -{w=0.1} top of the mornin' to you!"
+    n 3fwlsm "Well -{w=0.2} top of the mornin' to you!"
     n 3nchsm "..."
     n 3nsqbo "..."
     n 3tsqss "What?{w=0.75}{nw}"
@@ -2394,13 +2674,16 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(12, 17)",
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            additional_properties={
+                "expression": "7clrsm"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_afternoon_keeping_well:
-    n 1nchbg "Hey!{w=0.2} Afternoon,{w=0.2} [player]!"
-    n 2unmsm "Keeping well?"
+    n 7cchbg "Hey!{w=0.2} Afternoon,{w=0.2} [player]!"
+    n 3tnmss "Keeping well?"
 
     return
 
@@ -2413,13 +2696,17 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(12, 17)",
             affinity_range=(jn_affinity.NORMAL, jn_affinity.LOVE),
+            additional_properties={
+                "expression": "7ulrsl"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_afternoon_how_are_you:
-    n 1nchbg "Oh!{w=0.2} Afternoon,{w=0.2} [player]!"
-    n 2uchsm "How're you doing today?"
+    n 7unmajesu "Oh!{w=0.75}{nw}" 
+    extend 4cchbg " Afternoon,{w=0.2} [player]!"
+    n 2cchsm "How're you doing?"
 
     return
 
@@ -2434,14 +2721,17 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
             affinity_range=(jn_affinity.HAPPY, None),
+            additional_properties={
+                "expression": "4tllbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_evening_long_day:
-    n 4unmbg "Aha!{w=0.5}{nw}" 
+    n 4unmbg "Aha!{w=0.75}{nw}" 
     extend 4fchbg " Evening,{w=0.2} [player]!"
-    n 2ksgsg "Long day,{w=0.2} huh?{w=0.5}{nw}" 
+    n 2ksgsg "Long day,{w=0.2} huh?{w=0.75}{nw}" 
     extend 2fcssm " Well,{w=0.2} you've come to the right place!"
     n 2nchbg "Just tell [n_name] all about it!"
 
@@ -2456,15 +2746,18 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() in range(18, 21)",
             affinity_range=(jn_affinity.NORMAL, None),
+            additional_properties={
+                "expression": "2fcspo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_evening_took_long_enough:
     $ chosen_tease = jn_utils.getRandomTease()
-    n 4fsqgs "[player]!{w=0.5}{nw}"
+    n 4fsqgs "[player]!{w=0.75}{nw}"
     extend 4fsqsr " There you are,{w=0.2} [chosen_tease]!"
-    n 2fcspo "Jeez...{w=0.75}{nw}" 
+    n 2fcspo "Jeez...{w=1}{nw}" 
     extend 2fsrpo " took you long enough!"
     n 2fsqsm "Ehehe."
     n 4uchbg "I'm just kidding!{w=0.2} Don't worry about it."
@@ -2483,16 +2776,19 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
             affinity_range=(jn_affinity.NORMAL, None),
+            additional_properties={
+                "expression": "5ulrbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_night_up_late:
-    n 1unmajeex "Oh!{w=0.75}{nw}"
+    n 5unmajeex "Oh!{w=0.75}{nw}"
     extend 4fchbgsbl " Hey,{w=0.2} [player]."
     n 3tnmss "Late night for you too,{w=0.2} huh?"
     n 3ullss "Well...{w=0.75}{nw}" 
-    extend 3nchgn " I'm not complaining!" 
+    extend 3nchgn " Guess I'm not complaining!" 
     n 3fchsm "Welcome back!"
 
     return
@@ -2506,12 +2802,15 @@ init 5 python:
             unlocked=True,
             conditional="store.jn_get_current_hour() >= 22 or store.jn_get_current_hour() <= 2",
             affinity_range=(jn_affinity.NORMAL, None),
+            additional_properties={
+                "expression": "7ullbo"
+            }
         ),
         topic_group=TOPIC_TYPE_GREETING
     )
 
 label greeting_night_night_owl:
-    n 1unmajesu "Oh!{w=0.3} [player]!{w=1}{nw}"
+    n 7unmajesu "Oh!{w=0.3} [player]!{w=1}{nw}"
     extend 3fllsslsbl " You're a night owl too,{w=0.2} huh?"
     n 3fcsbg "N-{w=0.2}not that I have a problem with that,{w=0.2} obviously." 
     extend 4nchgnl " Welcome back!"
@@ -2650,6 +2949,7 @@ label greeting_sanjo_generic:
 
     return
 
+# Natsuki didn't expect company!
 init 5 python:
     registerTopic(
         Topic(
@@ -2715,5 +3015,61 @@ label greeting_glasses_eyetest:
         $ chosen_tease = jn_utils.getRandomTeaseName()
         n 3fchbgl "Welcome back,{w=0.2} you [chosen_tease]!{w=0.75}{nw}"
         extend 3nchgnl " Now start talking already!"
+
+# Natsuki the night-surfer!
+init 5 python:
+    registerTopic(
+        Topic(
+            persistent._greeting_database,
+            label="greeting_night_browsing",
+            unlocked=True,
+            conditional="jn_is_time_block_night() and jn_utils.diceRoll(10)",
+            affinity_range=(jn_affinity.AFFECTIONATE, None),
+            additional_properties={
+                "desk_item": "jn_laptop",
+                "expression": "gaming"
+            }
+        ),
+        topic_group=TOPIC_TYPE_GREETING
+    )
+
+label greeting_night_browsing:
+    play audio keyboard
+    n 1cdwsslsbl "..."
+    play audio keyboard
+    n 1cdwsmlsbl "..."
+    n 1unmflleshsbl "...!"
+    n 1uskwrlsbl "[player_initial]-{w=0.2}[player]!{w=0.75}{nw}"
+    extend 1fbkwrlsbl " S-{w=0.2}since when did you get here?!{w=0.75}{nw}"
+    extend 1fllemlsbl " Jeez!"
+    n 1csqfllsbl "Are you {i}trying{/i} to scare the crap out of me or what?{w=0.75}{nw}"
+    extend 1csrfllsbr " I swear,{w=0.2} it's almost like do that on purpose."
+    n 1csrsllsbr "..."
+    n 1csrajlsbr "Well...{w=1} at least it autosaved.{w=0.75}{nw}"
+    extend 1clrbol " I guess.{w=1.5}{nw}"
+    extend 1ccsfll " J-{w=0.2}just give me a second,{w=0.2} alright?"
+
+    show natsuki 1ccscal
+    show black zorder JN_BLACK_ZORDER with Dissolve(0.5)
+    $ jnPause(0.5)
+    show natsuki 2ccsss
+    $ Natsuki.clearDesk()
+    play audio drawer
+    $ jnPause(1.3)
+    hide black with Dissolve(0.5)
+    $ jnPause(1)
+
+    n 2cslca "..."
+    n 4ccsss "Heh.{w=0.75}{nw}"
+    extend 4ccsaj " So..."
+    n 3fsqss "What did {w=0.2}{i}you{/i}{w=0.2} wanna talk about so badly then,{w=0.5}{nw}"
+    extend 3fsqbg " [player]?{w=0.75}{nw}"
+    
+    if Natsuki.isEnamored(higher=True):
+        n 7fklbgl "O-{w=0.2}or were you just here to {i}browse{/i} too?"
+        extend 7fchsmleaf " Ehehe."
+
+    else:
+        n 7fsqsm "Ehehe."
 
     return

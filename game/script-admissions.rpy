@@ -50,13 +50,13 @@ label player_admissions_start:
         ]
         admission_menu_items.sort()
 
-    call screen scrollable_choice_menu(admission_menu_items, ("Nevermind.", None), 400, "mod_assets/icons/admissions.png")
+    call screen scrollable_choice_menu(admission_menu_items, ("Go back", None), 400, "mod_assets/icons/admissions.png")
 
-    if _return:
+    if isinstance(_return, basestring):
         $ push(_return)
         jump call_next_topic
 
-    return
+    jump talk_menu
 
 init 5 python:
     registerTopic(
@@ -226,7 +226,7 @@ label admission_anxious:
             else:
                 n 4fchsml "Ehehe."
                 $ chosen_tease = jn_utils.getRandomTease()
-                n 4fchbgl "Do your best,{w=0.2} [chosen_tease]"
+                n 4fchbgl "Do your best,{w=0.2} [chosen_tease]."
         
         else:
             n 4fcssslsbl "B-{w=0.2}besides..."

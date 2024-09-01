@@ -20,6 +20,7 @@ init python in jn_jokes:
         funny = 2
         corny = 3
         bad = 4
+        confusing = 5
 
     class JNJoke:
         def __init__(
@@ -616,6 +617,71 @@ init python in jn_jokes:
         display_name="Time trials",
         joke_category=JNJokeCategories.neutral
     ))
+    __registerJoke(JNJoke(
+        label="joke_wolves_alphabet",
+        display_name="Wolf education",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sailor_shipshape",
+        display_name="Sailors",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_seamstress_thread",
+        display_name="Seamstress",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sting_operation",
+        display_name="Bee theft",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_sculptors_steak_marbled",
+        display_name="Sculptors",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_rhetorical",
+        display_name="Rhetorical",
+        joke_category=JNJokeCategories.confusing
+    ))
+    __registerJoke(JNJoke(
+        label="joke_fuzz",
+        display_name="Fuzz",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_restroom_comedian",
+        display_name="Restroom comedian",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_glasses_framed",
+        display_name="Eyeglasses",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_surround_sound",
+        display_name="Audio technician",
+        joke_category=JNJokeCategories.corny
+    ))
+    __registerJoke(JNJoke(
+        label="joke_rose_thorns",
+        display_name="Roses",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_acrobats_somersault",
+        display_name="Acrobats",
+        joke_category=JNJokeCategories.neutral
+    ))
+    __registerJoke(JNJoke(
+        label="joke_frog_seating",
+        display_name="Frog seating",
+        joke_category=JNJokeCategories.corny
+    ))
 
 label joke_clock_eating:
     n 1fcsbg "Hey,{w=0.2} [player]..."
@@ -697,7 +763,7 @@ label joke_tractor_trailer:
     n 1fllaj "I was meant to see a film all about tractors,{w=0.75}{nw}"
     extend 1fcspo " but I ended up missing it!"
     n 1ulraj "It's fine though,{w=0.2} really."
-    n 1fsqss "I didn't catch see the tractor..."
+    n 1fsqss "I didn't catch the tractor..."
     n 1fchbg "...But I at least saw the {i}trailer{/i}!"
 
     return     
@@ -1507,19 +1573,6 @@ label joke_frog_notes:
 
     return
 
-label joke_frog_notes:
-    n 1ccsemesi "..."
-    n 1cslflsbl "Guess I better apologize in advance for this one,{w=0.2} [player].{w=0.75}{nw}"
-    extend 1ccsemsbl " Ugh."
-    n 1ccsaj "Alright.{w=0.75}{nw}"
-    extend 1csgsl " How do frogs take their notes for class?"
-    n 1clrsl "..."
-    n 1fsrsl "..."
-    n 1fcsfl "They use lily-{w=0.75}{nw}"
-    extend 1csqfl " {i}pads{/i}."
-
-    return
-
 label joke_sea_urchins:
     n 1ccsflesi "..."
     n 1csqem "Do I seriously have to read {i}this{/i} one out to you?{w=0.75}{nw}"
@@ -1558,5 +1611,172 @@ label joke_time_trial:
     n 1ccsbg "They'd be watching{w=0.5}{nw}"
     extend 1csgbg " {i}time trials{/i},{w=0.75}{nw}"
     extend 1fchbs " duh!"
+
+    return
+label joke_wolves_alphabet:
+    n 1ccsbg "Heh.{w=0.75}{nw}"
+    extend 1fllbg " We'll see who's{w=0.75}{nw}"
+    extend 1fsqss " {i}howling{/i}{w=0.75}{nw}"
+    extend 1fcsss " after this one."
+    n 1fcsaj "'Kay.{w=0.75}{nw}"
+    extend 1fcssm " So!"
+    n 1unmaj "What's the first thing a wolf would learn if it started going to school?"
+    n 1cnmsm "..."
+    n 1csqss "Oh?{w=0.75}{nw}"
+    extend 1csqbg " You're not gonna bite,{w=0.2} [player]?"
+    n 1ccssm "Ehehe."
+    n 1flrbg "They'd learn the {i}alpha{/i}-{w=0.75}{nw}"
+    extend 1fsqbg "bet,{w=0.5}{nw}"
+    extend 1fchbs " Duh!"
+
+    return
+
+label joke_sailor_shipshape:
+    n 1fupfl "Ugh.{w=0.75}{nw}"
+    extend 1fsrem " As if {i}this{/i} excuse for a joke holds any water.{w=0.75}{nw}"
+    extend 1cnmem " Do I really have to read it out,{w=0.2} [player]?"
+    n 1ccsemesi "..."
+    n 1cslfl "How do you describe a sailor that works out every day?"
+    n 1cllslsbr "..."
+    n 1fdlslsbr "..."
+    n 1fsqfl "...{i}Ship{/i}-{w=0.75}{nw}"
+    extend 1fsrem "{i}shape{/i}."
+
+    return
+
+label joke_seamstress_thread:
+    n 1ccsaj "So,{w=0.2} [player] -{w=0.5}{nw}"
+    extend 1unmaj " did you hear about the seamstress that always left her work up until the last possible minute?"
+    n 1clrfl "Yeah!{w=0.75}{nw}"
+    extend 1cnmwr " Talk about unforgiving.{w=0.75}{nw}"
+    extend 1csqemsbr " Can you imagine all it would take to totally screw everything up,{w=0.2} working like that?"
+    n 1ccsfl "Man...{w=1}{nw}"
+    extend 1tnmpu " If anything happened?"
+    n 1ccsss "...Heh."
+    n 1fllss "I guess she really would be{w=0.5}{nw}"
+    extend 1fsqbg " {i}hanging on by a thread{/i},{w=0.75}{nw}"
+    extend 1fchgn " right?"
+    
+    return
+
+label joke_sting_operation:
+    n 1clraj "Hey,{w=0.2} [player]...{w=1}{nw}"
+    extend 1tnmsl " did you hear about all the thefts targeting beekeepers recently?"
+    n 1ccsfl "I mean,{w=0.5}{nw}"
+    extend 1fcswr " come on!{w=0.75}{nw}"
+    extend 1fsqem " {i}Bees{/i}?{w=0.75}{nw}"
+    extend 1fllem " How low could you {i}possibly{/i} get?"
+    n 1fllpu "Though...{w=1}{nw}"
+    extend 1cllbo " I gotta admit.{w=0.75}{nw}" 
+    extend 1unmfl " How they caught them in the end?"
+    n 1ccsss "Heh."
+    n 1ccsbg "Now that's what I call a{w=0.5}{nw}" 
+    extend 1fsqbg " {i}sting{/i}{w=0.75}{nw}"
+    extend 1fchgn " operation!"
+    
+    return
+
+label joke_sculptors_steak_marbled:
+    n 1fcsbg "'Kay!{w=0.75}{nw}"
+    extend 1fsqbg " So,{w=0.2} [player]..."
+    n 1fsgss "How do sculptors prefer their steaks?"
+    n 1fsgsm "..."
+    n 1tsqbg "No?{w=0.75}{nw}"
+    extend 1fcssmesm " Come on,{w=0.2} [player]!{w=0.75}{nw}"
+    extend 1tlrbg " Isn't it obvious?"
+    n 1tsgbg "...With plenty of{w=0.5}{nw}"
+    extend 1fsqbg " {i}marbling{/i},{w=0.75}{nw}"
+    extend 1fchbs " duh!"
+
+    return
+
+label joke_rhetorical:
+    n 1ccsaj "...So."
+    n 1cdwpu "...What do you get if you cross a joke{w=0.5}{nw}"
+    extend 1tsqsl " with a rhetorical question?"
+    
+    return
+
+label joke_fuzz:
+    n 1ccsflesi "...Man,{w=0.2} this is dumb.{w=0.75}{nw}"
+    extend 1csrsl " Fine."
+    n 1ccsaj "Who do you call for someone who only steals wool,{w=0.2} yarn,{w=0.2} and fluffy socks?"
+    n 1cnmbo "..."
+    n 1cllbo "..."
+    n 1cnmfl "...The{w=0.5}{nw}" 
+    extend 1cslfl " {i}fuzz{/i}."
+
+    return
+
+label joke_restroom_comedian:
+    n 1ccsemesi "..."
+    n 1clrbo "Why did the comedian insist on warming up his act in the restroom?"
+    n 1csqbo "..."
+    n 1cslfl "...I can't believe I'm saying this."
+    n 1ccsfl "So he always had jokes...{w=1}{nw}"
+    extend 1csqpo " {i}on tap{/i}."
+
+    return
+
+label joke_glasses_framed:
+    n 1fsqbg "Let's see how you handle this one.{w=0.75}{nw}"
+    extend 1fcsaj " So!"
+    n 1csqbg "How does someone with glasses react to being told bad news?"
+    n 1csqsm "..."
+    n 1fsqss "Heh.{w=0.75}{nw}"
+    extend 1csgbg " Don't you know,{w=0.2} [player]?"
+    n 1flrss "It all depends on how you{w=0.5}{nw}"
+    extend 1fsqbg " {i}frame{/i}{w=0.5}{nw}"
+    extend 1fchbs " the situation!"
+
+    return
+
+label joke_surround_sound:
+    n 1csqflsbl "Don't say I didn't warn you,{w=0.2} [player]."
+    n 1ccsfl "How do audio technicians get over feeling lonely?"
+    n 1csrca "..."
+    n 1ccsem "Ugh."
+    n 1cllem "They use...{w=1}{nw}"
+    extend 1cnmfl " {i}surround{/i}{w=0.5}{nw}"
+    extend 1csqfl " {i}sound{/i}."
+
+    return
+
+label joke_rose_thorns:
+    n 1ccsss "You better{w=0.5}{nw}"
+    extend 1csgbg " {i}prick{/i}{w=0.5}{nw}"
+    extend 1fnmbg " your ears for this one!"
+    n 1fcsaj "'Kay!{w=0.75}{nw}"
+    extend 1fcssm " So."
+    n 1tsqbg "Why did the gardener give up on planting roses?"
+    n 1fnmsm "..."
+    n 1ccssmesm "Heh."
+    n 1clrbg "'Cause they were turning out to be a real{w=0.5}{nw}"
+    extend 1csqbg " {i}thorn{/i}{w=0.75}{nw}" 
+    extend 1fchbs " in his side!"
+
+    return
+
+label joke_acrobats_somersault:
+    n 1ccssmesm "Heh.{w=0.75}{nw}"
+    extend  1fsqbg " Riddle me this,{w=0.2} [player]!"
+    n 1fcsbg "What kind of move do acrobats practice most in the middle of the year?"
+    n 1fnmsm "..."
+    n 1fcsbs "Duh!"
+    n 1fsqbg "They'd practice{w=0.5}{nw}"
+    extend 1fsgbg " {i}summer{/i}{w=0.75}{nw}"
+    extend 1fchbg " -saults,{w=0.5}{nw}"
+    extend 1fchgn " of course!"
+
+    return
+
+label joke_frog_seating:
+    n 1cslem "Who did they annoy to have to include {i}this{/i} one?{w=0.75}{nw}"
+    extend 1ccsem " Ugh."
+    n 1clrsl "What kind of seating do you set out for a frog?"
+    n 1csrsl "..."
+    n 1ccsflesi "..."
+    n 1cllfl "A {i}toad{/i}-{w=0.75}{nw}"
+    extend 1fsqca " stool."
 
     return

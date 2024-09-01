@@ -461,7 +461,6 @@ init python in jn_data_migrations:
     @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3", "1.3.4"], "1.3.5", runtime=MigrationRuntimes.INIT)
     def to_1_3_5():
         jn_utils.log("Migration to 1.3.5 START")
-        store.persistent._jn_version = "1.3.5"
 
         if renpy.linux or renpy.macintosh:
             # See: https://github.com/Just-Natsuki-Team/NatsukiModDev/pull/844
@@ -481,13 +480,20 @@ init python in jn_data_migrations:
         if store.persistent.jn_total_visit_count > 0 and store.Natsuki.isNormal(higher=True):
             # Allow players who have experienced the old music to see the transition event
             store.persistent._jn_player_allow_legacy_music_switch_event = True
+
+        # Configure shown_count for holidays
+        for holiday in jn_events.getAllHolidays():
+            holiday.shown_count = 1 if holiday.label in store.persistent._seen_ever else 0
+            jn_utils.log("Set shown count for {0} to {1}".format(holiday.label, holiday.shown_count))
         
-        if store.persistent.affinity >= 12500:
+        if store.persistent.affinity >= 12500 and jn_utils.get_total_gameplay_months() < 6:
             store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent._jn_snpsht_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.saveGame()
+        store.persistent._jn_version = "1.3.5"
         jn_utils.log("Migration to 1.3.5 DONE")
         return

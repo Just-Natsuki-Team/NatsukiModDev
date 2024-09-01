@@ -112,7 +112,7 @@ init python in jn_activity:
                 return renpy.substitute(random.choice(self.notify_text))
 
             return None
-    
+
     class JNActivityManager:
         """
         Management class for handling activities.
@@ -225,7 +225,7 @@ init python in jn_activity:
     ))
     ACTIVITY_MANAGER.registerActivity(JNPlayerActivity(
         activity_type=JNActivities.music_applications,
-        window_name_regex="(^spotify$|^spotify premium$|^groove$|^zune$|^itunes$)",
+        window_name_regex="(^spotify$|^spotify premium$|^groove$|^zune$|^itunes$|^musicbee$|^aimp$|^winamp$)",
         notify_text=[
             "You better play something good!",
             "New playlist, [player]?",
@@ -468,13 +468,13 @@ init python in jn_activity:
         """
         Gets the title of the currently active window.
 
-        IN: 
+        IN:
             - delay - int amount of seconds to wait before checking window
 
         OUT:
             - str representing the title of the currently active window
         """
-        global ACTIVITY_SYSTEM_ENABLED 
+        global ACTIVITY_SYSTEM_ENABLED
         if ACTIVITY_SYSTEM_ENABLED:
             if delay is not 0:
                 store.jnPause(delay, hard=True)

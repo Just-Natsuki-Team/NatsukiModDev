@@ -50,9 +50,9 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     </td>
     <td align="center">
         <a href="https://github.com/Edgarmods">
-            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Edgarmods"/>
+            <img src="https://avatars.githubusercontent.com/u/68255592?v=4" width="100;" alt="Primrose"/>
             <br />
-            <sub><b>Edgarmods</b></sub>
+            <sub><b>Primrose</b></sub>
         </a>
     </td></tr>
 <tr>
@@ -126,6 +126,30 @@ An After-Story style mod for Natsuki from DDLC, focusing on building a post-game
     - InspectorJ
     - launemax
     - LG
+    - angeliqueperdikes
+    - Bee09
+    - Bertrof
+    - brandondelehoy
+    - ChazzRavenelle
+    - cupido-1
+    - Daleonfire
+    - Euphrosyyn
+    - Garuda1982
+    - HogantheLogan
+    - JasonElrod
+    - Joao_Janz
+    - jrssandoval
+    - Mydo1
+    - Robinhood76
+    - ryanharding95
+    - Sai-AnnNadesan
+    - SDLx
+    - Sirkoto51
+    - suntemple
+    - Syna-Max
+    - TinyRay
+    - tmkappelt
+    - valli39
 
     </details>
 - Our [contributors](https://github.com/Just-Natsuki-Team/NatsukiModDev/graphs/contributors)!
@@ -168,7 +192,7 @@ It's rude to keep someone waiting, you know...
 
 Download the official launcher and follow the installation steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
-#### Manual installation
+#### Manual installation (not recommended: see [using the official installer](#using-the-official-jn-installer-recommended))
 
 <details>
 <summary>Details</summary>
@@ -198,7 +222,7 @@ Download the official launcher and follow the installation steps [here](https://
 
 Download the official launcher and follow the update steps [here](https://github.com/Just-Natsuki-Team/NatsukiModInstaller/releases/tag/release)!
 
-#### Manual update
+#### Manual update (not recommended: see [using the official installer](#using-the-official-jn-installer-recommended))
 
 <details>
 <summary>Details</summary>
@@ -262,7 +286,7 @@ If so, then please consider joining us on Discord: we'd love to see you there!
 
 <br>
 <p align="center">
-    <a href="https://discord.gg/sFxdsCBh94">
+    <a href="https://discord.gg/jr59Tts23d">
         <img src="https://discordapp.com/api/guilds/930206430148063242/widget.png?style=banner4"/>
     </a>
 </p>
