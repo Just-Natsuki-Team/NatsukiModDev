@@ -193,11 +193,24 @@ label ch30_init:
                 push(jn_events.selectEvent())
                 renpy.call("call_next_topic", False)
 
+            elif persistent._jn_player_allow_legacy_music_switch_event and get_topic("event_change_of_atmosphere").shown_count == 0:
+                # Hacky, but no other way to force an event here - force the custom music switch event if it applies
+                push("event_change_of_atmosphere")
+                renpy.call("call_next_topic", False)
+
             else:
                 persistent._jn_event_attempt_count += 1
                 greeting_topic = jn_greetings.selectGreeting()
                 push(greeting_topic.label)
-                
+
+                # Show prop if one is associated with this greeting
+                if "prop" in greeting_topic.additional_properties:
+                    renpy.show(name="prop {0}".format(greeting_topic.additional_properties["prop"]), zorder=JN_PROP_ZORDER)
+
+                # Show overlay if one is associated with this greeting
+                if "overlay" in greeting_topic.additional_properties:
+                    renpy.show(name="overlay {0}".format(greeting_topic.additional_properties["overlay"]), zorder=JN_OVERLAY_ZORDER)
+
                 # Show desk item if one is associated with this greeting
                 if "desk_item" in greeting_topic.additional_properties:
                     desk_item = jn_desk_items.getDeskItem(greeting_topic.additional_properties["desk_item"])
@@ -219,22 +232,24 @@ label ch30_init:
     $ jnPause(0.5)
     show screen hkb_overlay
 
-    # Play appropriate music
+    # Decide which music to play
     if jn_random_music.getRandomMusicPlayable():
         $ available_custom_music = jn_utils.getAllDirectoryFiles(
             path=jn_custom_music.CUSTOM_MUSIC_DIRECTORY,
             extension_list=jn_utils.getSupportedMusicFileExtensions()
         )
-        if (len(available_custom_music) >= 2):
-            $ renpy.play(
-                filename=jn_custom_music.getMusicFileRelativePath(file_name=random.choice(available_custom_music)[0], is_custom=True),
-                channel="music"
-            )
+        if len(available_custom_music) >= 2:
+            # We have custom music and random music was turned on, so play a random track
+            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=random.choice(available_custom_music)[0], is_custom=True), channel="music")
+            $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.random
         else:
-            play music audio.just_natsuki_bgm
-
+            # No custom music was found, so play the track for the current location
+            $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
+            $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.random
     else:
-        play music audio.just_natsuki_bgm
+        # Just play the track for the current location
+        $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music")
+        $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.location
 
     # Random sticker chance
     if (
@@ -247,6 +262,7 @@ label ch30_init:
 
 #The main loop
 label ch30_loop:
+    $ jn_activity.ACTIVITY_MANAGER.setIsEnabled(True)
     $ jnShowNatsukiIdle(jn_center)  
 
     #Run our checks

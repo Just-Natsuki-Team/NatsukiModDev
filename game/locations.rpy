@@ -1,6 +1,4 @@
-#Start off in the clubroom
 default persistent._current_location = "classroom"
-
 default persistent._jn_sunrise_setting = 3
 default persistent._jn_sunset_setting = 2
 
@@ -28,7 +26,8 @@ init python in jn_locations:
                 2: 18,
                 3: 19,
                 4: 20,
-                5: 21
+                5: 21,
+                6: 22
             }.get(value)
 
         else:
@@ -38,7 +37,8 @@ init python in jn_locations:
                 2: 6,
                 3: 7,
                 4: 8,
-                5: 9
+                5: 9,
+                6: 10
             }.get(value)
 
     def checkUpdateLocationSunriseSunset(location):
@@ -66,22 +66,10 @@ init python in jn_locations:
 init -20 python:
     import os
 
-    class Location(object):
+    class JNLocation(object):
         """
-        PROPERTIES:
-            - id
-            - img_file_path (directory to point to images, ideally names would be derived via id-<time_of_day>)
-            - entry_pp
-            - exit_pp
-            - can_have_deco
-            (works for room since the flags and stuff, also sets things up for future. Maybe change this to 'allowed_deco_categories', and we can have decorations via category)
+        Represents a location, such as the classroom.
         """
-
-        T_DAY = "-day"
-        T_NIGHT = "-night"
-
-        IMG_EXT = ".png"
-
         def __init__(
             self,
             id,
@@ -90,24 +78,28 @@ init -20 python:
             allowed_deco_categories=None,
             on_entry=None,
             on_exit=None,
+            day_theme_affinity_map=None,
+            night_theme_affinity_map=None,
         ):
             """
-            Location constructor
+            Initialises a new instance of JNLocation.
 
             IN:
-                id - a unique id for this background. Will raise exceptions if a Location with a duplicate initialized
-                image_dir - a filepath containing the day and night (and other) associated images for this Location
-                image_fallback - a dict of image tags with the following keys:
+                - id - a unique id for this background. Will raise exceptions if a Location with a duplicate initialized
+                - image_dir - a filepath containing the day and night (and other) associated images for this Location
+                - image_fallback - a dict of image tags with the following keys:
                     "DAY", "NIGHT", these will have image tags as their values, which should be used to display
-                allowed_deco_categories - List of strings representing categories for decorations which are supported for this Location
+                - allowed_deco_categories - List of strings representing categories for decorations which are supported for this Location
                     If None, this is set to an empty list. Empty lists mean no decorations are supported
                     (Default: None)
-                on_entry - Function to run when changing into this Location. If None, nothing is done.
+                - on_entry - Function to run when changing into this Location. If None, nothing is done
                     (Default: None)
-                on_exit - Function to run when leaving this Location. If None, nothing is done.
+                - on_exit - Function to run when leaving this Location. If None, nothing is done
                     (Default: None)
+                - day_theme_affinity_map - Dictionary of affinity levels and music tracks to play during daytime for this location.
+                - night_theme_affinity_map - Dictionary of affinity levels and music tracks to play during nighttime for this location.
             """
-            #Initial checks to make sure this can be loaded
+            # Initial checks to make sure this can be loaded
             if id in store.jn_locations.LOCATION_MAP:
                 raise Exception("[ERROR]: A Location with id '{0}' already exists.".format(id))
 
@@ -118,26 +110,26 @@ init -20 python:
                     )
                 )
 
-            #Build the image FPs
-            day_image_fp = "mod_assets/backgrounds/{0}/{1}".format(image_dir, id + Location.T_DAY + Location.IMG_EXT)
-            night_image_fp = "mod_assets/backgrounds/{0}/{1}".format(image_dir, id + Location.T_NIGHT + Location.IMG_EXT)
+            # Build the image FPs
+            day_image_fp = "mod_assets/backgrounds/{0}/{1}".format(image_dir, id + "-day.png")
+            night_image_fp = "mod_assets/backgrounds/{0}/{1}".format(image_dir, id + "-night.png")
 
-            #Verify the day image is loadable
+            # Verify the day image is loadable
             if not renpy.loadable(day_image_fp):
                 raise Exception("[ERROR]: Day image ('{0}') is not loadable.".format(day_image_fp))
 
-            #And the night
+            # And the night
             if not renpy.loadable(night_image_fp):
                 raise Exception("[ERROR]: Night image ('{0}') is not loadable.".format(night_image_fp))
 
-            #Now that all checks have passed, we should create the object
+            # Now that all checks have passed, we should create the object
             self.id = id
 
-            #Make the tags
+            # Make the tags
             self.day_image_tag = "{0}_day".format(id)
             self.night_image_tag = "{0}_night".format(id)
 
-            #Register the images
+            # Register the images
             renpy.display.image.images.update({
                 (self.day_image_tag,): Image(day_image_fp),
                 (self.night_image_tag,): Image(night_image_fp)
@@ -148,14 +140,20 @@ init -20 python:
 
             self.on_entry = on_entry
             self.on_exit = on_exit
+            self.day_theme_affinity_map = day_theme_affinity_map
+            self.night_theme_affinity_map = night_theme_affinity_map
 
-        def get_current_room_image(self):
+        def getCurrentRoomImage(self):
             """
-            Gets the current room image
+            Gets the image tag for the room given the time of day.
             """
-            if store.main_background.is_day():
-                return self.day_image_tag
-            return self.night_image_tag
+            return self.day_image_tag if store.main_background.isDay() else self.night_image_tag
+
+        def getCurrentTheme(self):
+            """
+            Gets the music that should play for the room given the time of day.
+            """
+            return self.day_theme_affinity_map.get(store.Natsuki._getAffinityState()) if store.main_background.isDay() else self.night_theme_affinity_map.get(store.Natsuki._getAffinityState())
 
     class JNRoom(object):
         """
@@ -172,14 +170,14 @@ init -20 python:
             self.sunrise = datetime.time(sunrise_hour)
             self.sunset = datetime.time(sunset_hour)
 
-            #States
-            self.__is_showing_day_image = self.is_day()
+            # States
+            self.__is_showing_day_image = self.isDay()
 
-            #Eventhandlers
+            # Eventhandlers
             self.day_to_night_event = JNEvent()
             self.night_to_day_event = JNEvent()
 
-        def set_location(self, new_location, **kwargs):
+        def setLocation(self, new_location, **kwargs):
             """
             Sets the location. Does NOT run exit prog points for the current location
 
@@ -195,7 +193,7 @@ init -20 python:
 
             self.location = new_location
 
-        def change_location(self, new_location, **kwargs):
+        def changeLocation(self, new_location, **kwargs):
             """
             Changes the location
 
@@ -206,9 +204,9 @@ init -20 python:
             if self.location.on_exit is not None:
                 self.location.on_exit(new_location, **kwargs)
 
-            self.set_location(new_location, **kwargs)
+            self.setLocation(new_location, **kwargs)
 
-        def is_day(self):
+        def isDay(self):
             """
             Checks if it's day right now
 
@@ -235,7 +233,7 @@ init -20 python:
             room = None
 
             if dissolve_all or full_redraw:
-                room = self.location.get_current_room_image()
+                room = self.location.getCurrentRoomImage()
 
             #Draw the room if we're not showing it already
             if room is not None:
@@ -254,7 +252,7 @@ init -20 python:
             """
             Draws the location without any transition/scene effects.
             """
-            room = self.location.get_current_room_image()
+            room = self.location.getCurrentRoomImage()
             if room is not None:
                 renpy.show(room, tag="main_bg", zorder=store.JN_LOCATION_ZORDER)
 
@@ -263,18 +261,12 @@ init -20 python:
             
             return
 
-        def is_showing_day_room(self):
-            """
-            Checks if we're showing the day room
-            """
-            return self.__is_showing_day_image
-
-        def check_redraw(self):
+        def checkRedraw(self):
             """
             Checks if we need to redraw the room for a time change
             """
             #If it's day and we're showing the night room, we should full redraw to show day room again
-            if self.is_day() and self.__is_showing_day_image is False:
+            if self.isDay() and self.__is_showing_day_image is False:
                 self.__is_showing_day_image = True
                 self.draw(dissolve_all=True)
 
@@ -282,7 +274,7 @@ init -20 python:
                 self.night_to_day_event()
 
             #If it's night and we're showing the day room, we should do a full redraw to show the night room
-            elif not self.is_day() and self.__is_showing_day_image is True:
+            elif not self.isDay() and self.__is_showing_day_image is True:
                 self.__is_showing_day_image = False
                 self.draw(dissolve_all=True)
 
@@ -296,17 +288,38 @@ init -20 python:
             persistent._current_location = self.location.id
 
 init python:
+    import store.jn_affinity as jn_affinity
+
     main_background = JNRoom(
         sunrise_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunrise_setting)),
         sunset_hour=int(jn_locations.getHourFromSunriseSunsetValue(store.persistent._jn_sunset_setting, is_sunset=True))
     )
-
-    classroom = Location(
+    main_background.setLocation(JNLocation(
         id="classroom",
-        image_dir="classroom"
-    )
-
-    main_background.set_location(classroom)
+        image_dir="classroom",
+        day_theme_affinity_map={
+            jn_affinity.LOVE: "strawberry_daydream.ogg",
+            jn_affinity.ENAMORED: "strawberry_daydream.ogg",
+            jn_affinity.AFFECTIONATE: "strawberry_daydream.ogg",
+            jn_affinity.HAPPY: "strawberry_daydream.ogg",
+            jn_affinity.NORMAL: "strawberry_daydream.ogg",
+            jn_affinity.UPSET: "strawberry_daydream.ogg",
+            jn_affinity.DISTRESSED: "strawberry_daydream_distressed.ogg",
+            jn_affinity.BROKEN: "strawberry_daydream_distressed.ogg",
+            jn_affinity.RUINED: "strawberry_daydream_ruined.ogg",
+        },
+        night_theme_affinity_map={
+            jn_affinity.LOVE: "stars_that_shimmer.ogg",
+            jn_affinity.ENAMORED: "stars_that_shimmer.ogg",
+            jn_affinity.AFFECTIONATE: "stars_that_shimmer.ogg",
+            jn_affinity.HAPPY: "stars_that_shimmer.ogg",
+            jn_affinity.NORMAL: "stars_that_shimmer.ogg",
+            jn_affinity.UPSET: "stars_that_shimmer.ogg",
+            jn_affinity.DISTRESSED: "stars_that_shimmer_distressed.ogg",
+            jn_affinity.BROKEN: "stars_that_shimmer_distressed.ogg",
+            jn_affinity.RUINED: "stars_that_shimmer_ruined.ogg",
+        }
+    ))
 
     #Register the event handlers to handle button sounds
     def __change_to_night_button_sounds():
@@ -320,13 +333,30 @@ init python:
     main_background.day_to_night_event += __change_to_night_button_sounds
     main_background.night_to_day_event += __change_to_day_button_sounds
 
-    #Now, run the appropriate eventhandler
-    #If it's day now, we need to run night to day, and vice versa
-    if main_background.is_day():
+    # Run the appropriate event handler - if it's day now, we need to run night to day, and vice versa
+    if main_background.isDay():
         main_background.night_to_day_event()
 
     else:
         main_background.day_to_night_event()
 
     if persistent._current_location in jn_locations.LOCATION_MAP:
-        main_background.change_location(persistent._current_location)
+        main_background.changeLocation(persistent._current_location)
+
+init 5 python:
+    # Register the event handlers to handle day/night music changes; we have define these later as we can't call renpy.play() in an init block
+    def __change_to_time_of_day_theme():
+        if (
+            main_background.location.getCurrentTheme() is not None
+            and jn_custom_music._last_music_option == jn_custom_music.JNMusicOptionTypes.location
+            and renpy.music.get_playing().split()[-1] != main_background.location.getCurrentTheme()
+        ):
+            if renpy.music.is_playing():
+                # Fade out anything currently playing
+                renpy.music.stop(fadeout=0.75)
+                jnPause(0.75)
+
+            renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=main_background.location.getCurrentTheme(), is_custom=False), channel="music", fadein=2)
+
+    main_background.day_to_night_event += __change_to_time_of_day_theme
+    main_background.night_to_day_event += __change_to_time_of_day_theme

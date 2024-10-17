@@ -36,10 +36,10 @@ label random_music_change:
         return
 
     $ track_quip = random.choice([
-        "Alright!{w=0.2} About time for a different tune,{w=0.1} I think!",
+        "Alright!{w=0.2} Time for a different tune!",
         "Okaaay!{w=0.2} Time for another song!",
-        "I think I'm about done with this song.",
-        "'Kay, that's enough of that.",
+        "Yeah,{w=0.2} I think I'm about done with this song.",
+        "'Kay,{w=0.2} that's enough of that.",
         "New song time!",
         "That's about enough of that number!",
         "I wanna listen to something else...",
@@ -55,11 +55,11 @@ label random_music_change:
     $ jnPause(2)
 
     $ track_followup = random.choice([
-        "Now,{w=0.1} let's see...",
-        "Now,{w=0.1} what have we got...",
+        "Now,{w=0.2} let's see...",
+        "Now,{w=0.2} what have we got...",
         "Let's see here...",
         "What else have we got...",
-        "Aha!{w=0.2} Let's try this one!",
+        "Aha!{w=0.5} Let's try this one!",
         "Let me see..."
     ])
     n 2fcssm "[track_followup]{w=2}{nw}"
@@ -73,20 +73,21 @@ label random_music_change:
     $ jnPause(2)
     $ renpy.play(filename=jn_custom_music.getMusicFileRelativePath(file_name=music_title, is_custom=True), channel="music", fadein=2)
     $ jn_custom_music._now_playing = music_title
-    $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing))
+    $ renpy.notify("Now playing: {0}".format(jn_custom_music._now_playing.split(".")[0]))
     $ track_complete = random.choice([
         "Done~!",
         "All done!",
         "All good!",
         "There we go!",
-        "And...{w=0.3} we're good!",
-        "Okie-dokie!{w=0.3} Ehehe."
+        "And...{w=1} we're good!",
+        "Okie-dokie!{w=0.75} Ehehe."
     ])
 
     n 2uchbgeme "[track_complete]{w=2}{nw}"
     show natsuki 2fcssm
 
     $ jn_custom_music.hideMusicPlayer()
+    $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.random
 
     return
 
@@ -144,6 +145,8 @@ label random_music_enable:
         $ chosen_tease = jn_utils.getRandomTease()
         n 3uchbg "Just add them to the custom music folder,{w=0.1} [chosen_tease]!"
 
+    $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.random
+
     return
 
 # Disable random music
@@ -178,12 +181,18 @@ label random_music_disable:
 
     play audio button_tap_c
     show music_player playing
-    play music audio.just_natsuki_bgm fadein 2
+    $ renpy.play(
+        filename=jn_custom_music.getMusicFileRelativePath(
+            file_name=main_background.location.getCurrentTheme(),
+            is_custom=False),
+        channel="music",
+        fadein=2)
     $ jnPause(2)
 
     n 2nwlbg "...And there we go!"
 
     $ jn_custom_music.hideMusicPlayer()
-
+    $ jn_custom_music._last_music_option = jn_custom_music.JNMusicOptionTypes.location
     $ persistent.jn_random_music_enabled = False
+
     return

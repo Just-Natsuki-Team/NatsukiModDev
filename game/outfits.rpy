@@ -1116,6 +1116,11 @@ init -1 python in jn_outfits:
         IN:
             - outfit - the JNOutfit to delete
         """
+        if outfit.is_jn_outfit:
+            renpy.notify("Delete outfit failed; check log for more information.")
+            jn_utils.log("Failed to delete outfit {0}, as it is an official item and cannot be removed.".format(outfit.display_name))
+            return False
+
         # Create directory if it doesn't exist
         if jn_utils.createDirectoryIfNotExists(__CUSTOM_OUTFITS_DIRECTORY):
             jn_utils.log("custom_outfits directory was not found and had to be created.")
@@ -1573,7 +1578,7 @@ init -1 python in jn_outfits:
     ))
     __registerWearable(JNClothes(
         reference_name="jn_clothes_cosy_cardigan",
-        display_name="Cosy cardigan",
+        display_name="Cozy cardigan",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1610,6 +1615,12 @@ init -1 python in jn_outfits:
     __registerWearable(JNClothes(
         reference_name="jn_clothes_cherry_blossom_dress",
         display_name="Cherry Blossom dress",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __registerWearable(JNClothes(
+        reference_name="jn_clothes_raincoat",
+        display_name="Raincoat",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1710,6 +1721,12 @@ init -1 python in jn_outfits:
     __registerWearable(JNHeadgear(
         reference_name="jn_headgear_chocolate_plaid_bow",
         display_name="Chocolate plaid bow",
+        unlocked=False,
+        is_jn_wearable=True
+    ))
+    __registerWearable(JNClothes(
+        reference_name="jn_headgear_raincoat_hood",
+        display_name="Raincoat hood",
         unlocked=False,
         is_jn_wearable=True
     ))
@@ -1992,7 +2009,7 @@ init -1 python in jn_outfits:
     ))
     __registerOutfit(JNOutfit(
         reference_name="jn_cosy_cardigan_outfit",
-        display_name="Cosy cardigan outfit",
+        display_name="Cozy cardigan outfit",
         unlocked=False,
         is_jn_outfit=True,
         clothes=getWearable("jn_clothes_cosy_cardigan"),
@@ -2093,7 +2110,7 @@ init -1 python in jn_outfits:
         accessory=getWearable("jn_accessory_hairband_red")
     ))
 
-    # Outfit used for ahoge unlock event
+    # Outfit used for ahoge unlock event: event_not_ready_yet
     __registerOutfit(JNOutfit(
         reference_name="jn_ahoge_unlock",
         display_name="Ahoge unlock",
@@ -2101,6 +2118,18 @@ init -1 python in jn_outfits:
         is_jn_outfit=True,
         clothes=getWearable("jn_clothes_star_pajamas"),
         hairstyle=getWearable("jn_hair_super_messy")
+    ))
+
+    # Outfit used for raincoat/new music unlock event: event_change_of_atmosphere
+    __registerOutfit(JNOutfit(
+        reference_name="jn_raincoat_unlock",
+        display_name="Raincoat unlock",
+        unlocked=False,
+        is_jn_outfit=True,
+        clothes=getWearable("jn_clothes_raincoat"),
+        hairstyle=getWearable("jn_hair_down"),
+        accessory=getWearable("jn_accessory_hairband_red"),
+        headgear=getWearable("jn_headgear_raincoat_hood")
     ))
 
     # Random choice between pajamas
@@ -2191,11 +2220,21 @@ label outfits_wear_outfit:
 
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
-    n 4unmaj "Huh?{w=0.75}{nw}" 
-    extend 4unmbo " You want me to try on another outfit?"
+    $ dialogue_choice = random.randint(1, 3)
+    if dialogue_choice == 1:
+        n 4tnmpu "Eh?{w=0.75}{nw}"
+        extend 4tnmbo " You wanna see another outfit,{w=0.2} [player]?"
+
+    elif dialogue_choice == 2:
+        n 4tnmss "Oh?{w=0.75}{nw}"
+        extend 4clrss " You wanna see me try something else on,{w=0.2} [player]?"
+
+    else:
+        n 4unmaj "Huh?{w=0.75}{nw}"
+        extend 4unmbo " You want me to try on another outfit?"
     
     if Natsuki.isEnamored(higher=True):
         n 1fchbgl "Sure thing!{w=0.75}{nw}"
@@ -2211,29 +2250,25 @@ label outfits_wear_outfit:
         n 7tlrsl "So...{w=1}{nw}"
         extend 7unmbo " did you have something in mind,{w=0.2} or?"
 
+    if Natsuki.isAffectionate(higher=True):
+        show natsuki option_wait_excited at jn_left
+
+    else:
+        show natsuki option_wait_curious at jn_left
+
     python:
         # Get unlocked outfits, sort them and generate player options
-        options = []
         available_outfits = jn_outfits.JNOutfit.filterOutfits(
             outfit_list=jn_outfits.getAllOutfits(),
             unlocked=True)
-        available_outfits.sort(key = lambda option: option.display_name)
-
-        for outfit in available_outfits:
-            options.append((jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit))
-
-        options.insert(0, ("You pick!", "random"))
+        outfit_options = [(jn_utils.escapeRenpySubstitutionString(outfit.display_name), outfit) for outfit in available_outfits]
+        outfit_options.sort(key = lambda option: (not option[1].is_jn_outfit, option[1].display_name))
+        outfit_options.insert(0, ("You pick!", "random"))
 
     $ outfit_confirmed = False
     while not outfit_confirmed:
         # Get the outfit
-        if Natsuki.isAffectionate(higher=True):
-            show natsuki option_wait_excited at jn_left
-
-        else:
-            show natsuki option_wait_curious at jn_left
-
-        call screen scrollable_choice_menu(options, ("Nevermind.", None))
+        call screen outfit_item_menu(outfit_options)
         show natsuki at jn_center
 
         if isinstance(_return, jn_outfits.JNOutfit):
@@ -2245,6 +2280,8 @@ label outfits_wear_outfit:
                 $ chosen_descriptor = "you {0}".format(jn_utils.getRandomTeaseName()) if Natsuki.isAffectionate(higher=True) else player
                 n 4fchgn "I'm already wearing that,{w=0.2} [chosen_descriptor]!{w=0.75}{nw}"
                 extend 3fsqbg " At least pick {i}something{/i} different!"
+                
+                show natsuki option_wait_smug at jn_left
 
             else:
                 # Wear the chosen outfit, stop the loop
@@ -2367,7 +2404,7 @@ label outfits_reload:
         extend 7tlrfl " I-{w=0.5}{nw}"
         show natsuki 4udwflleshsbl
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     else:
@@ -2401,7 +2438,7 @@ label outfits_suggest_outfit:
         n 1fcstrlesi "At {i}least{/i} show me what it is first!"
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     n 4unmaj "Ooh!{w=1}{nw}"
@@ -2428,7 +2465,7 @@ label outfits_remove_outfit:
         n 1fcstrlesi "At least show me what it is first!"
         show natsuki 1fcspol
 
-        $ jn_rm_topic_from_event_list("new_wearables_outfits_unlocked")
+        $ jnRemoveTopicFromEventList("new_wearables_outfits_unlocked")
         jump new_wearables_outfits_unlocked
 
     elif (
@@ -2523,7 +2560,7 @@ label outfits_create_select_headgear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNHeadgear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No headgear", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a headgear item...")
@@ -2543,7 +2580,7 @@ label outfits_create_select_hairstyle:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNHairstyle)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (option[1].is_jn_wearable, option[1].display_name))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a hairstyle...")
 
@@ -2561,7 +2598,7 @@ label outfits_create_select_eyewear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNEyewear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No eyewear", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose an eyewear item...")
@@ -2580,7 +2617,7 @@ label outfits_create_select_accessory:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNAccessory)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No accessory", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose an accessory...")
@@ -2600,7 +2637,7 @@ label outfits_create_select_necklace:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNNecklace)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No necklace", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a necklace...")
@@ -2620,7 +2657,7 @@ label outfits_create_select_clothes:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNClothes)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a clothing item...")
 
@@ -2642,7 +2679,7 @@ label outfits_create_select_facewear:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNFacewear)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No facewear", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a facewear item...")
@@ -2662,7 +2699,7 @@ label outfits_create_select_back:
     python:
         unlocked_wearables = jn_outfits.JNWearable.filterWearables(wearable_list=jn_outfits.getAllWearables(), unlocked=True, wearable_type=jn_outfits.JNBack)
         wearable_options = [(jn_utils.escapeRenpySubstitutionString(wearable.display_name), wearable) for wearable in unlocked_wearables]
-        wearable_options.sort(key = lambda option: option[1].display_name)
+        wearable_options.sort(key = lambda option: (not option[1].is_jn_wearable, option[1].display_name))
         wearable_options.insert(0, ("No back", "none"))
 
     call screen scrollable_choice_menu(items=wearable_options, last_item=("Nevermind.", None), menu_caption="Choose a back item...")
@@ -2732,12 +2769,14 @@ label outfits_create_quit:
                 extend 1nllaj " Well...{w=0.3} okay."
                 n 2nsrpol "I was bored of changing anyway."
 
+                show natsuki at jn_center
                 play audio clothing_ruffle
                 $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
                 with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
                 jump ch30_loop
 
     else:
+        show natsuki at jn_center
         n 4tllaj "So...{w=1}{nw}"
         extend 3tnmpo " you don't want me to change after all?"
         n 1nlrbo "Huh."
@@ -2888,7 +2927,7 @@ label outfits_create_save:
                         jump ch30_loop
 
                 # Outfit cannot use the name of an outfit that already exists
-                elif jn_outfits.JNOutfit.filterOutfits(outfit_list=jn_outfits.getAllOutfits(), display_name=[outfit_name]) is not None:
+                elif len(jn_outfits.JNOutfit.filterOutfits(outfit_list=jn_outfits.getAllOutfits(), display_name=[outfit_name])) != 0:
                     if duplicate_repeat_count == 0:
                         n 2nsqaj "Wow.{w=0.75}{nw}"
                         extend 2tsqfl " Really,{w=0.2} [player]?{w=0.75}{nw}"
@@ -3477,7 +3516,7 @@ screen create_outfit():
 
         hbox:
             # Back slot
-            textbutton _("Back"):
+            textbutton _("Back item"):
                 style "hkbd_option"
                 action Jump("outfits_create_select_back")
 
@@ -3502,3 +3541,49 @@ screen create_outfit():
         textbutton _("Quit"):
             style "hkbd_option"
             action Jump("outfits_create_quit")
+
+screen outfit_item_menu(items):
+    $ option_width = 560
+
+    fixed:
+        area (1280 - (40 + option_width), 40, option_width, 440)
+        vbox:
+            ypos 0
+            yanchor 0
+
+            textbutton "Nevermind":
+                style "categorized_menu_button"
+                xsize option_width
+                action Return(False)
+                hover_sound gui.hover_sound
+                activate_sound gui.activate_sound
+
+            null height 20
+
+            viewport:
+                id "viewport"
+                yfill False
+                mousewheel True
+
+                vbox:
+                    for display_prompt, _value in items:
+                        textbutton display_prompt:
+                            style "categorized_menu_button"
+                            xsize option_width
+                            action Return(_value)
+                            hover_sound gui.hover_sound
+                            activate_sound gui.activate_sound
+
+                            # Visual option differentiation
+                            if (type(_value) is jn_outfits.JNOutfit and _value.is_jn_outfit) or (issubclass(type(_value), jn_outfits.JNWearable) and _value.is_jn_wearable):
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_cd.png", gui.frame_hover_borders, tile=gui.frame_tile)
+
+                            elif (not isinstance(_value, basestring)):
+                                idle_background Frame("mod_assets/buttons/choice_hover_blank_folder.png", gui.frame_hover_borders, tile=gui.frame_tile)
+
+                        null height 5
+
+        bar:
+            style "classroom_vscrollbar"
+            value YScrollValue("viewport")
+            xalign scroll_align

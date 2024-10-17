@@ -117,12 +117,15 @@ python early in jn_data_migrations:
         #If we got here, the versions are equal
         return 0
 
-    def checkCurrentVersionIsLatest():
+    def checkCurrentVersionIsLatest(notify_if_current=False):
         """
         Checks the latest release and compares the version number against the persisted version number.
         If an update is available, notify the user.
         
         For best results, run threaded as to not block execution.
+
+        IN:
+            - notify_if_current: Bool flag on if to notify if Just Natsuki is already up to date. False by default.
         """
         try:
             response = requests.get(jn_globals.LINK_JN_LATEST, verify=os.environ['SSL_CERT_FILE'])
@@ -134,11 +137,21 @@ python early in jn_data_migrations:
             current_version_latest = compareVersions(store.persistent._jn_version, response.url.split("/")[-1].replace("v", "")) in [0, 1]
             
             if not current_version_latest:
-                renpy.notify("An update for Just Natsuki is now available!")
+                renpy.notify("An update for Just Natsuki is now available! Go to: https://github.com/Just-Natsuki-Team/NatsukiModDev/releases")
+
+            elif notify_if_current:
+                renpy.notify("Just Natsuki is already up to date!")
 
         except Exception as exception:
             jn_utils.log("Failed to check for updates: {0}".format(exception))
             return False
+
+    def checkCurrentVersionIsLatestFromMenu():
+        """
+        Checks the latest release of the mod and notifies regardless of the outcome.
+        Hack to bypass Ren'Py's poor menuing code not allowing for nested functions with parameters.
+        """
+        checkCurrentVersionIsLatest(notify_if_current=True)
 
     def runInitMigrations():
         """
@@ -448,7 +461,6 @@ init python in jn_data_migrations:
     @migration(["1.3.0", "1.3.1", "1.3.2", "1.3.3", "1.3.4"], "1.3.5", runtime=MigrationRuntimes.INIT)
     def to_1_3_5():
         jn_utils.log("Migration to 1.3.5 START")
-        store.persistent._jn_version = "1.3.5"
 
         if renpy.linux or renpy.macintosh:
             # See: https://github.com/Just-Natsuki-Team/NatsukiModDev/pull/844
@@ -458,23 +470,30 @@ init python in jn_data_migrations:
             if jn_utils.deleteDirectory(os.path.join(renpy.config.basedir, "game/mod_assets/natsuki/sleeves/jn_clothes_QT_sweater")):
                 jn_utils.log("Removed unused assets: sleeves/jn_clothes_QT_sweater")
 
+        # Threading functions were rolled into definitions; these are no longer required
         if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpy")):
             jn_utils.log("Removed unused source file: game/threading.rpy")
         
         if jn_utils.deleteFileFromDirectory(os.path.join(renpy.config.basedir, "game/threading.rpyc")):
             jn_utils.log("Removed unused compiled file: game/threading.rpyc")
 
+        if store.persistent.jn_total_visit_count > 0 and store.Natsuki.isNormal(higher=True):
+            # Allow players who have experienced the old music to see the transition event
+            store.persistent._jn_player_allow_legacy_music_switch_event = True
+
         # Configure shown_count for holidays
         for holiday in jn_events.getAllHolidays():
             holiday.shown_count = 1 if holiday.label in store.persistent._seen_ever else 0
             jn_utils.log("Set shown count for {0} to {1}".format(holiday.label, holiday.shown_count))
         
-        if store.persistent.affinity >= 12500:
+        if store.persistent.affinity >= 12500 and jn_utils.get_total_gameplay_months() < 6:
             store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent._jn_snpsht_aff = store.persistent.affinity
             store.persistent.affinity = 0
             store.persistent._jn_pic = True
             jn_utils.log("434346".decode("hex"))
 
         jn_utils.saveGame()
+        store.persistent._jn_version = "1.3.5"
         jn_utils.log("Migration to 1.3.5 DONE")
         return

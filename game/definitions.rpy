@@ -21,6 +21,7 @@ init -990 python:
     # Remember that higher zorder values are displayed closer to the player!
     JN_GLITCH_ZORDER = 99
     JN_BLACK_ZORDER = 10
+    JN_SPECIAL_EFFECTS_ZORDER = 6
     JN_OVERLAY_ZORDER = 5
     JN_PROP_ZORDER = 4
     JN_NATSUKI_ZORDER = 3
@@ -40,6 +41,7 @@ init -3 python:
     from collections import OrderedDict
     import datetime
     from Enum import Enum
+    import random
     import re
     import store.jn_affinity as jn_affinity
     import store.jn_utils as jn_utils
@@ -530,7 +532,7 @@ init -3 python:
         if topic_label in persistent._event_list:
             persistent._event_list.remove(topic_label)
 
-    def jn_rm_topic_from_event_list(topic_label):
+    def jnRemoveTopicFromEventList(topic_label):
         """
         Removes all occurrences of a topic from the event list
 
@@ -543,7 +545,7 @@ init -3 python:
             if _topic_label != topic_label
         ]
 
-    def jn_rm_topic_from_event_list_pattern(topic_label_pattern):
+    def jnRemoveTopicFromEventListPattern(topic_label_pattern):
         """
         Removes all occurrences of a topic from the event list
 
@@ -981,6 +983,41 @@ init -3 python:
 
         return renpy.display.image.images[tags] if tags in renpy.display.image.images else Null()
 
+    def jnGenerateRandomForScreenWidth(trans, st, at):
+        """
+        Generates a random number and stores it globally for animations, etc.
+        """
+        trans.xpos = random.choice(range(0, 1280))
+        return
+
+    def jnFadeToBlack(fade_time=0, delay=0):
+        """
+        Fades into the standard black screen.
+
+        IN:
+            - fade_time - The time to take for the fadeout to occur.
+            - delay - The time to delay after the fadeout has completed.
+        """
+        renpy.show(name="black", zorder=JN_BLACK_ZORDER)
+        renpy.with_statement(Dissolve(fade_time))
+        jnPause(fade_time + delay)
+
+        return
+
+    def jnFadeFromBlack(fade_time=0, delay=0):
+        """
+        Fades from the standard black screen.
+
+        IN:
+            - fade_time - The time to take for the fadein to occur.
+            - delay - The time to delay after the fadein has completed.
+        """
+        renpy.hide("black")
+        renpy.with_statement(Dissolve(fade_time))
+        jnPause(fade_time + delay)
+
+        return
+
 # Variables with cross-script utility specific to Just Natsuki
 init -990 python in jn_globals:
     import re
@@ -1235,6 +1272,56 @@ init -999 python in jn_utils:
         """
         return {"mp3", "ogg", "wav"}
 
+    class JNThreadedFunction():
+        def __init__(self, function, args=()):
+            """
+            Initialises a new instance of JNThreadedFunction.
+
+            Allows a given function with arguments to be started and stopped on an independent thread.
+            This will not return a result, therefore only use this for things like void functions where no return is expected/needed.
+
+            IN:
+                - function - the function to call when run is called
+                - args - parameters to be passed to the function; must be of type list or tuple
+            """
+            if not callable(function):
+                raise Exception("Failed to initialise threaded function instance; function is not callable.")
+
+            if not isinstance(args, tuple) and not isinstance(args, list):
+                raise Exception("Failed to initialise threaded function instance; args must be of types list or tuple.")
+
+            if isinstance(args, list):
+                args = tuple(args)
+
+            self.__function = function
+            self.__args = args
+            self.__running = False
+            self.__thread = None
+ 
+        def getIsRunning(self):
+            return self.__running
+
+        def start(self):
+            if not self.__running:
+                self.__running = True
+
+                # We pass a reference to the thread so any continuous loop can reference the running state 
+                run_args = (self,) + self.__args
+
+                if len(self.__args) > 0:
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=run_args)
+
+                else:
+                    self.__thread = threading.Thread(name=uuid.uuid4(), target=self.__function, args=run_args)
+                    self.test = self.__thread
+
+                self.__thread.daemon = True
+                self.__thread.start()
+                
+        def stop(self):
+            if self.__running:
+                self.__running = False
+
 init -100 python in jn_utils:
     import codecs
     import random
@@ -1310,7 +1397,7 @@ init -100 python in jn_utils:
         """
         return get_total_gameplay_length().total_seconds() / 2628000
 
-    def get_time_in_session_descriptor():
+    def getTimeInSessionDescriptor():
         """
         Get a descriptor based on the number of minutes the player has spent in the session, up to 30 minutes
 
@@ -1343,6 +1430,19 @@ init -100 python in jn_utils:
         else:
             return "a while"
 
+    def getMinutesSinceLastVisit():
+        """
+        Returns the number of minutes since the player's last visit.
+
+        OUT:
+            - Minutes elapsed since the last time JN was started.
+        """
+        if store.persistent.jn_last_visited_date is not None:
+            return (datetime.datetime.now() - store.persistent.jn_last_visited_date).total_seconds() / 60
+
+        else:
+            return (datetime.datetime.now() - datetime.datetime.today()).total_seconds() / 60
+
     def getNumberOrdinal(value):
         """
         Returns the ordinal (trailing characters) for a given numerical value.
@@ -1352,6 +1452,16 @@ init -100 python in jn_utils:
 
         else:
             return ["th", "st", "nd", "rd", "th"][min(value % 10, 4)]
+    
+    def diceRoll(faces):
+        """
+        Returns True or False based on whether a roll with the given faces returns one.
+        IN:
+            - faces - int number of faces for the diceroll
+        OUT:
+            - True if the roll equals one, otherwise False
+        """
+        return random.randint(1, faces) == 1
 
     def diceRoll(faces):
         """
@@ -1907,6 +2017,7 @@ init -100 python in jn_utils:
 
         if store.persistent.affinity >= (store.persistent._jn_gs_aff + 250):
             store.persistent._jn_pic_aff = store.persistent.affinity
+            store.persistent._jn_snpsht_aff = store.persistent.affinity
             store.persistent.affinity = store.persistent._jn_gs_aff
             jn_utils.log("434346".decode("hex"))
             store.persistent._jn_pic = True
@@ -1977,10 +2088,13 @@ define audio.chair_in = "mod_assets/sfx/chair_in.ogg"
 define audio.chair_out = "mod_assets/sfx/chair_out.ogg"
 define audio.chair_out_fast = "mod_assets/sfx/chair_out_fast.ogg"
 define audio.chair_out_in = "mod_assets/sfx/chair_out_in.ogg"
+define audio.chair_out_slow = "mod_assets/sfx/chair_out_slow.ogg"
 define audio.clothing_ruffle = "mod_assets/sfx/clothing_ruffle.ogg"
 define audio.coin_flip = "mod_assets/sfx/coin_flip.ogg"
 define audio.drawer = "mod_assets/sfx/drawer.ogg"
 define audio.drink_pour = "mod_assets/sfx/drink_pour.ogg"
+define audio.drip_a = "mod_assets/sfx/drip_a.ogg"
+define audio.drip_b = "mod_assets/sfx/drip_b.ogg"
 define audio.gift_close = "mod_assets/sfx/gift_close.ogg"
 define audio.gift_open = "mod_assets/sfx/gift_open.ogg"
 define audio.gift_rustle = "mod_assets/sfx/gift_rustle.ogg"
@@ -1995,11 +2109,14 @@ define audio.kettle_boil = "mod_assets/sfx/kettle_boil.ogg"
 define audio.keyboard = "mod_assets/sfx/keyboard.ogg"
 define audio.kiss = "mod_assets/sfx/kiss.ogg"
 define audio.laptop_close = "mod_assets/sfx/laptop_close.ogg"
+define audio.metal_clang = "mod_assets/sfx/metal_clang.ogg"
 define audio.necklace_clip = "mod_assets/sfx/necklace_clip.ogg"
 define audio.notification = "mod_assets/sfx/notification.ogg"
 define audio.page_turn = "mod_assets/sfx/page_turn.ogg"
 define audio.paper_crumple = "mod_assets/sfx/paper_crumple.ogg"
 define audio.paper_throw = "mod_assets/sfx/paper_throw.ogg"
+define audio.puddle_step_a = "mod_assets/sfx/puddle_step_a.ogg"
+define audio.puddle_step_b = "mod_assets/sfx/puddle_step_b.ogg"
 define audio.select_confirm = "mod_assets/sfx/select_confirm.ogg"
 define audio.select_hover = "mod_assets/sfx/select_hover.ogg"
 define audio.smack = "mod_assets/sfx/smack.ogg"
@@ -2011,6 +2128,7 @@ define audio.switch_flip = "mod_assets/sfx/switch_flip.ogg"
 define audio.thump = "mod_assets/sfx/switch_flip.ogg"
 define audio.twitch_die = "mod_assets/sfx/twitch_die.ogg"
 define audio.twitch_you_lose = "mod_assets/sfx/twitch_you_lose.ogg"
+define audio.water_splash = "mod_assets/sfx/water_splash.ogg"
 define audio.zipper = "mod_assets/sfx/zipper.ogg"
 
 # Glitch/spooky sound effects
