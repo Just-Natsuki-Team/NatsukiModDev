@@ -2769,12 +2769,14 @@ label outfits_create_quit:
                 extend 1nllaj " Well...{w=0.3} okay."
                 n 2nsrpol "I was bored of changing anyway."
 
+                show natsuki at jn_center
                 play audio clothing_ruffle
                 $ Natsuki.setOutfit(jn_outfits._LAST_OUTFIT)
                 with Fade(out_time=0.1, hold_time=1, in_time=0.5, color="#181212")
                 jump ch30_loop
 
     else:
+        show natsuki at jn_center
         n 4tllaj "So...{w=1}{nw}"
         extend 3tnmpo " you don't want me to change after all?"
         n 1nlrbo "Huh."
@@ -2925,7 +2927,7 @@ label outfits_create_save:
                         jump ch30_loop
 
                 # Outfit cannot use the name of an outfit that already exists
-                elif jn_outfits.JNOutfit.filterOutfits(outfit_list=jn_outfits.getAllOutfits(), display_name=[outfit_name]) is not None:
+                elif len(jn_outfits.JNOutfit.filterOutfits(outfit_list=jn_outfits.getAllOutfits(), display_name=[outfit_name])) != 0:
                     if duplicate_repeat_count == 0:
                         n 2nsqaj "Wow.{w=0.75}{nw}"
                         extend 2tsqfl " Really,{w=0.2} [player]?{w=0.75}{nw}"
@@ -3514,7 +3516,7 @@ screen create_outfit():
 
         hbox:
             # Back slot
-            textbutton _("Back"):
+            textbutton _("Back item"):
                 style "hkbd_option"
                 action Jump("outfits_create_select_back")
 
