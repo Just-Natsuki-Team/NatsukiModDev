@@ -793,17 +793,17 @@ label outfits_menu:
 label extras_menu:
     python:
         Natsuki.setInConversation(True)
-        avaliable_extras_options = []
+        available_extras_options = []
 
-        # Since conditions can change, we check each time if each option is now avaliable due to context changes (E.G affinity is now higher)
+        # Since conditions can change, we check each time if each option is now available due to context changes (E.G affinity is now higher)
         for extras_option in jn_plugins.extras_options:
             if eval(extras_option.visible_if):
-                avaliable_extras_options.append((extras_option.option_name, extras_option.jump_label))
+                available_extras_options.append((extras_option.option_name, extras_option.jump_label))
 
         # Sort the extras options by their display name
-        avaliable_extras_options.sort(key = lambda option: option[0])
+        available_extras_options.sort(key = lambda option: option[0])
 
-    call screen scrollable_choice_menu(avaliable_extras_options, ("Nevermind.", None))
+    call screen scrollable_choice_menu(available_extras_options, ("Nevermind.", None))
 
     if isinstance(_return, basestring):
         $ renpy.jump(_return)
