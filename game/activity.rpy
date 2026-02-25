@@ -9,7 +9,7 @@ init python in jn_activity:
     import store
     import store.jn_globals as jn_globals
     import store.jn_utils as jn_utils
-    
+
     ACTIVITY_SYSTEM_ENABLED = True # Determines if the system supports activity detection
     LAST_ACTIVITY = None
 
@@ -34,7 +34,133 @@ init python in jn_activity:
             import Xlib.display
 
     elif renpy.macintosh:
-        ACTIVITY_SYSTEM_ENABLED = False
+        # macOS: enable, but do all osascript work off the main thread (to avoid UI stalls)
+        import subprocess
+        import time
+
+        ACTIVITY_SYSTEM_ENABLED = True
+
+        # Refresh frequency (seconds). Higher = less churn; lower = more responsive.
+        _JN_MAC_CACHE_TTL = 0.75
+
+        # Cached value returned instantly from getCurrentWindowName().
+        _jn_mac_cached_value = ""
+        _jn_mac_cached_at = 0.0
+        _jn_mac_refresh_in_flight = False
+
+        # Default to title mode (macOS user must have approved DDLC + JN system permissions)
+        MAC_READ_WINDOW_TITLE = True
+
+        # Tracks whether osascript appears usable. None = unknown (never tested yet).
+        _jn_mac_osascript_ok = None
+
+        def _jn_mac_run_osascript(script_text):
+            """
+            Runs osascript with a single -e script string.
+            Returns stdout (str) or "" on failure.
+            IMPORTANT: This may be slow; do NOT call it on the main thread.
+            """
+            try:
+                p = subprocess.Popen(
+                    ["/usr/bin/osascript", "-e", script_text],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE
+                )
+                out, err = p.communicate()
+                if out is None:
+                    return ""
+                return out.strip()
+            except Exception:
+                return ""
+
+        def _jn_mac_get_frontmost_app_name():
+            return _jn_mac_run_osascript(
+                'tell application "System Events" to get name of first application process whose frontmost is true'
+            )
+
+        def _jn_mac_get_frontmost_window_title():
+            return _jn_mac_run_osascript(
+                'tell application "System Events" to tell (first application process whose frontmost is true) to get name of front window'
+            )
+
+        def _jn_mac_refresh_cache_worker():
+            global _jn_mac_cached_value, _jn_mac_cached_at, _jn_mac_refresh_in_flight, _jn_mac_osascript_ok
+
+            try:
+                # First time: sanity-check osascript inside the worker thread.
+                if _jn_mac_osascript_ok is None:
+                    ok = _jn_mac_run_osascript('return "ok"')
+                    _jn_mac_osascript_ok = (ok == "ok")
+
+                if not _jn_mac_osascript_ok:
+                    _jn_mac_cached_value = ""
+                    _jn_mac_cached_at = time.time()
+                    return
+
+                app_name = _jn_mac_get_frontmost_app_name()
+                win_title = ""
+                url = ""
+
+                # Transient blanks happen. Retry once quickly.
+                if not app_name:
+                    time.sleep(0.05)
+                    app_name = _jn_mac_get_frontmost_app_name()
+
+                # Prefer app-native browser info when possible.
+                if MAC_READ_WINDOW_TITLE and app_name == "Safari":
+                    win_title = _jn_mac_run_osascript('tell application "Safari" to get name of front document')
+                    url = _jn_mac_run_osascript('tell application "Safari" to get URL of front document')
+
+                    if (not win_title) or (not url):
+                        time.sleep(0.05)
+                        if not win_title:
+                            win_title = _jn_mac_run_osascript('tell application "Safari" to get name of front document')
+                        if not url:
+                            url = _jn_mac_run_osascript('tell application "Safari" to get URL of front document')
+
+                elif MAC_READ_WINDOW_TITLE:
+                    # Generic fallback
+                    win_title = _jn_mac_get_frontmost_window_title()
+
+                if win_title and url and app_name:
+                    # Include URL so regex matching can key off domains.
+                    value = "{0} ({1}) - {2}".format(win_title, url, app_name)
+                elif win_title and app_name:
+                    value = "{0} - {1}".format(win_title, app_name)
+                elif win_title:
+                    value = win_title
+                elif app_name:
+                    value = app_name
+                else:
+                    value = ""
+
+                _jn_mac_cached_value = value
+                _jn_mac_cached_at = time.time()
+
+            finally:
+                _jn_mac_refresh_in_flight = False
+
+        def _jn_mac_kick_refresh_if_needed(force=False):
+            global _jn_mac_refresh_in_flight
+
+            now = time.time()
+
+            if _jn_mac_refresh_in_flight:
+                return
+
+            if (not force) and ((now - _jn_mac_cached_at) < _JN_MAC_CACHE_TTL):
+                return
+
+            _jn_mac_refresh_in_flight = True
+
+            # Run refresh off the main thread so input never stalls.
+            try:
+                renpy.invoke_in_thread(_jn_mac_refresh_cache_worker)
+            except Exception:
+                _jn_mac_refresh_in_flight = False
+
+        # Warm the cache once at boot, in the worker thread.
+        _jn_mac_kick_refresh_if_needed(force=True)
 
     class JNWindowFoundException(Exception):
         """
@@ -437,6 +563,88 @@ init python in jn_activity:
         ]
     ))
 
+    # macOS-only: extend detection coverage without changing Windows/Linux behavior
+    if renpy.macintosh:
+        def _jn__strip_outer_parens(s):
+            if not s:
+                return ""
+            s = s.strip()
+            if len(s) >= 2 and s[0] == "(" and s[-1] == ")":
+                return s[1:-1]
+            return s
+
+        def _jn__extend_activity_regex(activity_type, extra_regex):
+            try:
+                act = ACTIVITY_MANAGER.getActivityFromType(activity_type)
+            except Exception:
+                act = None
+
+            if act is None:
+                return
+
+            try:
+                old = act.window_name_regex
+            except Exception:
+                old = None
+
+            old_inner = _jn__strip_outer_parens(old)
+            extra_inner = _jn__strip_outer_parens(extra_regex)
+
+            if old_inner and extra_inner:
+                act.window_name_regex = "(" + old_inner + "|" + extra_inner + ")"
+            elif extra_inner:
+                act.window_name_regex = "(" + extra_inner + ")"
+
+        def _jn_patch_activity_entries_all():
+            try:
+                # Anime streaming: Crunchyroll, HiDive, RetroCrush
+                # Suggestion: include HiDive, RetroCrush for Windows/Linux
+                _jn__extend_activity_regex(
+                    JNActivities.anime_streaming,
+                    "(crunchyroll|crunchyroll\\.com|www\\.crunchyroll\\.com|hidive|hi\\s*dive|hidive\\.com|retrocrush|retrocrush\\.tv|retrocrush\\.com)"
+                )
+
+                # Work apps: Apple Pages, Numbers, Keynote
+                _jn__extend_activity_regex(
+                    JNActivities.work_applications,
+                    "( - pages| - numbers| - keynote|^pages$|^numbers$|^keynote$)"
+                )
+
+                # Music players: Apple Music, Marvis Pro
+                _jn__extend_activity_regex(
+                    JNActivities.music_applications,
+                    "(^music$| - music|marvis pro|^marvis$| - marvis|marvis)"
+                )
+
+                # Coding: TextEdit, Sublime Text, CotEditor, Xcode
+                _jn__extend_activity_regex(
+                    JNActivities.coding,
+                    "(^textedit$| - textedit|textedit|^sublime text$| - sublime text|sublime text|^coteditor$| - coteditor|coteditor|^xcode$| - xcode|xcode)"
+                )
+
+                # Music creation: GarageBand (robust variants)
+                _jn__extend_activity_regex(
+                    JNActivities.music_creation,
+                    "(^garageband$| - garageband|garageband)"
+                )
+
+                # Artwork: Pixelmator Pro
+                _jn__extend_activity_regex(
+                    JNActivities.artwork,
+                    "(pixelmator pro|pixelmator)"
+                )
+
+                # Video applications: IINA, Infuse
+                _jn__extend_activity_regex(
+                    JNActivities.video_applications,
+                    "(^iina$| - iina|iina|^infuse$| - infuse|infuse)"
+                )
+
+            except Exception:
+                pass
+
+        _jn_patch_activity_entries_all()
+
     def _getJNWindowHwnd():
         """
         Gets the hwnd of the JN game window (Windows only).
@@ -510,6 +718,18 @@ init python in jn_activity:
                             return str(wm_class[0])
 
                         # Fall through
+
+                elif renpy.macintosh:
+                    # macOS: never block UI; return cached and refresh in worker thread
+                    ACTIVITY_SYSTEM_ENABLED = True
+                    try:
+                        _jn_mac_kick_refresh_if_needed()
+                    except Exception:
+                        pass
+                    try:
+                        return _jn_mac_cached_value
+                    except Exception:
+                        return ""
 
             except AttributeError as exception:
                 ACTIVITY_SYSTEM_ENABLED = False
