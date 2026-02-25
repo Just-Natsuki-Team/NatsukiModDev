@@ -1096,6 +1096,98 @@ init -999 python in jn_utils:
     #We always want to log and keep history
     __main_log = renpy.renpy.log.open("log/log", append=True, flush=True)
 
+    # macOS-only: Ren'Py log handle can be unreliable in app bundles; replace with a direct utf-8 file handle.
+    if renpy.macintosh:
+        import codecs
+        import platform
+
+        _log_path = os.path.join(_logdir, "log.txt")
+
+        # Close the Ren'Py handle if possible, then replace it.
+        try:
+            __main_log.close()
+        except:
+            pass
+
+        __main_log = codecs.open(_log_path, "a", "utf-8")
+
+        # Reintroduces the session header, which is otherwise missing from macOS
+        try:
+            __main_log.write(u"\n")
+            __main_log.write(u"============================================================\n")
+            __main_log.write(u"\n")
+            __main_log.write(unicode(datetime.datetime.now().ctime()) + u"\n")
+            try:
+                mac_ver = platform.mac_ver()[0]
+            except:
+                mac_ver = ""
+
+            try:
+                darwin_ver = platform.release()
+            except:
+                darwin_ver = ""
+
+            try:
+                machine = platform.machine()
+            except:
+                machine = ""
+
+            os_line = u"macOS {0} (Darwin {1}) [{2}]".format(mac_ver or "Unknown", darwin_ver or "Unknown", machine or "Unknown")
+            __main_log.write(os_line + u"\n")
+
+            _rv = None
+
+            # Prefer version_string() if it exists and returns something usable
+            try:
+                if hasattr(renpy, "version_string") and callable(renpy.version_string):
+                    _rv = renpy.version_string()
+            except:
+                _rv = None
+
+            # If that failed or gave us something weird, try renpy.version() (function in 6.99)
+            if not _rv:
+                try:
+                    if hasattr(renpy, "version") and callable(renpy.version):
+                        _rv = renpy.version()
+                except:
+                    _rv = None
+
+            # Final fallback
+            if not _rv:
+                _rv = "Ren'Py (unknown)"
+
+            __main_log.write(unicode(_rv) + u"\n")
+
+            try:
+                app_name = config.name
+            except:
+                app_name = "Just Natsuki"
+
+            try:
+                app_ver = config.version
+            except:
+                app_ver = ""
+
+            # If config.version is blank, fall back to the persisted version you already log elsewhere.
+            if not app_ver:
+                try:
+                    app_ver = store.persistent._jn_version
+                except:
+                    app_ver = ""
+
+            if app_ver:
+                _app = u"{0} {1}".format(app_name, app_ver)
+            else:
+                _app = u"{0} (version unknown)".format(app_name)
+
+            __main_log.write(_app + u"\n")
+
+            __main_log.write(u"\n")
+            __main_log.flush()
+        except:
+            pass
+
+
     SEVERITY_INFO = 0
     SEVERITY_WARN = 1
     SEVERITY_ERR = 2
@@ -1117,12 +1209,34 @@ init -999 python in jn_utils:
             - logseverity - Severity level of the log message (Default: INFO)
         """
         global __main_log
-        __main_log.write(
-            LOGSEVERITY_MAP.get(
-                logseverity,
-                LOGSEVERITY_MAP[SEVERITY_INFO]
-            ).format(datetime.datetime.now(), message)
-        )
+
+        line = LOGSEVERITY_MAP.get(
+            logseverity,
+            LOGSEVERITY_MAP[SEVERITY_INFO]
+        ).format(datetime.datetime.now(), message)
+
+        if renpy.macintosh:
+            # macOS-only: ensure line separation + flush for the direct file handle
+            try:
+                if not isinstance(line, unicode):
+                    line = unicode(line)
+            except:
+                try:
+                    line = unicode(str(line))
+                except:
+                    line = u"[Unprintable log line]"
+
+            __main_log.write(line + u"\n")
+            try:
+                __main_log.flush()
+            except:
+                pass
+
+        else:
+            # Windows/Linux: exact vanilla behavior
+            __main_log.write(line)
+
+
 
     def prettyPrint(object, indent=1, width=150):
         """
